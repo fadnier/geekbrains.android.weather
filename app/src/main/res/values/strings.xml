@@ -1,3 +1,5 @@
 <resources>
-    <string name="app_name">geekbrains.weather</string>
+    <string name="app_name" translatable="false">Geekbrains Homework</string>
+    <string name="city">City</string>
+    <string name="degree" translatable="false">+25</string>
 </resources>
