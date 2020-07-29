@@ -1,4 +1,16 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="city">Город</string>
+    <string name="settings">Настройки</string>
+    <string name="selectCity">Выбор города</string>
+    <string name="back">Вернутся</string>
+    <string name="switch_theme">Тема день/ночь</string>
+    <string name="pressure">Давление</string>
+    <string name="wind_speed">Скорость ветра</string>
+    <string name="success">Выбрать</string>
+    <string name="moscow">Москва</string>
+    <string name="saint_petersburg">Санкт Петербург</string>
+    <string name="yekaterinburg">Екатеринбург</string>
+    <string name="novosibirsk">Новосибирск</string>
+    <string name="sochi">Сочи</string>
 </resources>
