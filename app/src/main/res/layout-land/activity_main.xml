@@ -37,4 +37,25 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintStart_toEndOf="@+id/textMainDegree"
         app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageButton
+        android:id="@+id/buttonSettings"
+        android:layout_width="75dp"
+        android:layout_height="75dp"
+        android:scaleType="centerInside"
+        android:src="@drawable/settings"
+        android:background="@android:color/transparent"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent" />
+    <ImageButton
+        android:id="@+id/buttonChangeCity"
+        android:layout_width="40dp"
+        android:layout_height="40dp"
+        android:background="@android:color/transparent"
+        android:scaleType="centerInside"
+        android:src="@drawable/change"
+        app:layout_constraintBottom_toBottomOf="@+id/textMainCity"
+        android:contentDescription=""
+        app:layout_constraintStart_toEndOf="@+id/textMainCity" />
+
 </androidx.constraintlayout.widget.ConstraintLayout>
