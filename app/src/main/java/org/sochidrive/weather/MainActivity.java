@@ -1,13 +1,16 @@
 package org.sochidrive.weather;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 public class MainActivity extends AppCompatActivity {
     ImageView imageMainWeather;
@@ -15,6 +18,7 @@ public class MainActivity extends AppCompatActivity {
     TextView textMainCity;
     ImageButton buttonSettings;
     ImageButton buttonChangeCity;
+    private final String tempDataKey = "tempDataKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -22,6 +26,58 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         initView();
         setOnClickButton();
+        logAndToast(R.string.onCreate);
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        logAndToast(R.string.onStart);
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        logAndToast(R.string.onResume);
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        logAndToast(R.string.onPause);
+    }
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        logAndToast(R.string.onStop);
+    }
+
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        logAndToast(R.string.onDestroy);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle saveInstanceState) {
+        logAndToast(R.string.onSaveInstanceState);
+        String text = textMainDegree.getText().toString();
+        saveInstanceState.putString(tempDataKey, text);
+
+        super.onSaveInstanceState(saveInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+        String text = savedInstanceState.getString(tempDataKey);
+        textMainDegree.setText(text);
+    }
+
+    private void logAndToast(int string) {
+        Log.d(getString(R.string.myLogs), getString(string));
+        Toast.makeText(this, string, Toast.LENGTH_SHORT).show();
     }
 
     private void initView() {
