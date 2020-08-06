@@ -21,6 +21,7 @@ public class WeatherActivity extends AppCompatActivity {
     CheckBox checkBoxWindSpeed;
     CheckBox checkBoxPressure;
     private final String windDataKey = "windDataKey";
+    final static String cityDataKey = "cityDataKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -28,6 +29,12 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         initView();
         setOnClickButton();
+        showDataFromFirstActivity();
+    }
+
+    private void showDataFromFirstActivity() {
+        String data = getIntent().getStringExtra(MainActivity.cityDataKey);
+        editTextSelectCity.setText(data);
     }
 
     @Override
@@ -72,8 +79,11 @@ public class WeatherActivity extends AppCompatActivity {
     private View.OnClickListener onClickListenerMain = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            Intent intent = new Intent(WeatherActivity.this,MainActivity.class);
-            startActivity(intent);
+            String text = editTextSelectCity.getText().toString();
+            Intent dataIntent = new Intent();
+            dataIntent.putExtra(cityDataKey, text);
+            setResult(RESULT_OK, dataIntent);
+            finish();
         }
     };
 

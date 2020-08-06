@@ -19,7 +19,7 @@
     <string name="onPause">Пауза</string>
     <string name="onStop">Стоп</string>
     <string name="onDestroy">Уничтожение</string>
-    <string name="myLogs">myLogs</string>
     <string name="onSaveInstanceState">Сохранение инстанс состояния</string>
     <string name="mainWeather">Текущая погода</string>
+    <string name="for_normal_weather">На нормальную погоду</string>
 </resources>
