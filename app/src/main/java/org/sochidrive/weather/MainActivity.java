@@ -112,6 +112,7 @@ public class MainActivity extends AppCompatActivity {
     private void setOnClickButton() {
         buttonSettings.setOnClickListener(onClickListenerSettings);
         buttonChangeCity.setOnClickListener(onClickListenerChangeCity);
+
         tempButton.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
