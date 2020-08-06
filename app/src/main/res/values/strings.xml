@@ -20,7 +20,8 @@
     <string name="onPause">onPause</string>
     <string name="onStop">onStop</string>
     <string name="onDestroy">onDestroy</string>
-    <string name="myLogs">myLogs</string>
+    <string name="myLogs" translatable="false">myLogs</string>
     <string name="onSaveInstanceState">onSaveInstanceState</string>
     <string name="mainWeather">Current weather</string>
+    <string name="for_normal_weather">For normal weather</string>
 </resources>

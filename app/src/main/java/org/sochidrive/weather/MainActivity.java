@@ -1,12 +1,15 @@
 package org.sochidrive.weather;
 
 import androidx.annotation.NonNull;
+import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,7 +21,10 @@ public class MainActivity extends AppCompatActivity {
     TextView textMainCity;
     ImageButton buttonSettings;
     ImageButton buttonChangeCity;
-    private final String tempDataKey = "tempDataKey";
+    Button tempButton;
+    static final String degreeDataKey = "degreeDataKey";
+    static final String cityDataKey = "cityDataKey";
+    private final int requestCodeChangeCity = 0016;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -62,8 +68,10 @@ public class MainActivity extends AppCompatActivity {
     @Override
     public void onSaveInstanceState(@NonNull Bundle saveInstanceState) {
         logAndToast(R.string.onSaveInstanceState);
-        String text = textMainDegree.getText().toString();
-        saveInstanceState.putString(tempDataKey, text);
+        String degree = textMainDegree.getText().toString();
+        saveInstanceState.putString(degreeDataKey, degree);
+        String city = textMainCity.getText().toString();
+        saveInstanceState.putString(cityDataKey, city);
 
         super.onSaveInstanceState(saveInstanceState);
     }
@@ -71,8 +79,20 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
-        String text = savedInstanceState.getString(tempDataKey);
-        textMainDegree.setText(text);
+        String degree = savedInstanceState.getString(degreeDataKey);
+        textMainDegree.setText(degree);
+        String city = savedInstanceState.getString(cityDataKey);
+        textMainCity.setText(city);
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, @Nullable Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+
+        if(requestCode == this.requestCodeChangeCity && resultCode == RESULT_OK && data != null) {
+            String strData = data.getStringExtra(WeatherActivity.cityDataKey);
+            textMainCity.setText(strData);
+        }
     }
 
     private void logAndToast(int string) {
@@ -86,11 +106,20 @@ public class MainActivity extends AppCompatActivity {
         textMainCity = findViewById(R.id.textMainCity);
         buttonSettings = findViewById(R.id.buttonSettings);
         buttonChangeCity = findViewById(R.id.buttonChangeCity);
+        tempButton = findViewById(R.id.tempButton);
     }
 
     private void setOnClickButton() {
         buttonSettings.setOnClickListener(onClickListenerSettings);
         buttonChangeCity.setOnClickListener(onClickListenerChangeCity);
+        tempButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Uri uri = Uri.parse("https://yandex.ru/pogoda/");
+                Intent intent = new Intent(Intent.ACTION_VIEW,uri);
+                startActivity(intent);
+            }
+        });
     }
 
     private View.OnClickListener onClickListenerSettings = new View.OnClickListener() {
@@ -105,7 +134,8 @@ public class MainActivity extends AppCompatActivity {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(MainActivity.this,WeatherActivity.class);
-            startActivity(intent);
+            intent.putExtra(cityDataKey,textMainCity.getText().toString());
+            startActivityForResult(intent,requestCodeChangeCity);
         }
     };
 }
