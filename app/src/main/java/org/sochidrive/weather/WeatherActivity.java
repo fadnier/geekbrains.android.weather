@@ -4,8 +4,10 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.TextView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class WeatherActivity extends AppCompatActivity {
@@ -16,6 +18,9 @@ public class WeatherActivity extends AppCompatActivity {
     TextView textListPos4;
     TextView textListPos5;
     TextView editTextSelectCity;
+    CheckBox checkBoxWindSpeed;
+    CheckBox checkBoxPressure;
+    private final String windDataKey = "windDataKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -23,6 +28,24 @@ public class WeatherActivity extends AppCompatActivity {
         setContentView(R.layout.activity_weather);
         initView();
         setOnClickButton();
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle saveInstanceState) {
+        SingletonSave.checkBoxPressure = checkBoxPressure.isChecked();
+        SingletonSave.checkBoxWindSpeed = checkBoxWindSpeed.isChecked();
+        saveInstanceState.putSerializable(windDataKey, SingletonSave.getInstance());
+
+        super.onSaveInstanceState(saveInstanceState);
+    }
+
+    @Override
+    protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
+        super.onRestoreInstanceState(savedInstanceState);
+
+        SingletonSave container = (SingletonSave)savedInstanceState.getSerializable(windDataKey);
+        checkBoxPressure.setChecked(SingletonSave.checkBoxPressure);
+        checkBoxWindSpeed.setChecked(SingletonSave.checkBoxWindSpeed);
     }
 
     private void initView() {
@@ -33,6 +56,8 @@ public class WeatherActivity extends AppCompatActivity {
         textListPos4 = findViewById(R.id.textListPos4);
         textListPos5 = findViewById(R.id.textListPos5);
         editTextSelectCity = findViewById(R.id.editTextSelectCity);
+        checkBoxPressure = findViewById(R.id.checkBoxPressure);
+        checkBoxWindSpeed = findViewById(R.id.checkBoxWindSpeed);
     }
 
     private void setOnClickButton() {

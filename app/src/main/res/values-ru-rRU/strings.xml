@@ -13,4 +13,13 @@
     <string name="yekaterinburg">Екатеринбург</string>
     <string name="novosibirsk">Новосибирск</string>
     <string name="sochi">Сочи</string>
+    <string name="onCreate">Создание</string>
+    <string name="onStart">Старт</string>
+    <string name="onResume">Возобновление</string>
+    <string name="onPause">Пауза</string>
+    <string name="onStop">Стоп</string>
+    <string name="onDestroy">Уничтожение</string>
+    <string name="myLogs">myLogs</string>
+    <string name="onSaveInstanceState">Сохранение инстанс состояния</string>
+    <string name="mainWeather">Текущая погода</string>
 </resources>

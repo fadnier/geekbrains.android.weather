@@ -14,4 +14,13 @@
     <string name="yekaterinburg">Yekaterinburg</string>
     <string name="novosibirsk">Novosibirsk</string>
     <string name="sochi">Sochi</string>
+    <string name="onCreate">onCreate</string>
+    <string name="onStart">onStart</string>
+    <string name="onResume">onResume</string>
+    <string name="onPause">onPause</string>
+    <string name="onStop">onStop</string>
+    <string name="onDestroy">onDestroy</string>
+    <string name="myLogs">myLogs</string>
+    <string name="onSaveInstanceState">onSaveInstanceState</string>
+    <string name="mainWeather">Current weather</string>
 </resources>
