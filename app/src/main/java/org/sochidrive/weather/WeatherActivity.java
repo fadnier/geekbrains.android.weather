@@ -10,13 +10,10 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import com.squareup.otto.Subscribe;
+
 public class WeatherActivity extends AppCompatActivity {
     Button buttonSuccess;
-    TextView textListPos1;
-    TextView textListPos2;
-    TextView textListPos3;
-    TextView textListPos4;
-    TextView textListPos5;
     TextView editTextSelectCity;
     CheckBox checkBoxWindSpeed;
     CheckBox checkBoxPressure;
@@ -33,7 +30,7 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     private void showDataFromFirstActivity() {
-        String data = getIntent().getStringExtra(MainActivity.cityDataKey);
+        String data = getIntent().getStringExtra(cityDataKey);
         editTextSelectCity.setText(data);
     }
 
@@ -47,6 +44,18 @@ public class WeatherActivity extends AppCompatActivity {
     }
 
     @Override
+    public void onStart() {
+        super.onStart();
+        EventBus.getBus().register(this);
+    }
+
+    @Override
+    public void onStop() {
+        EventBus.getBus().unregister(this);
+        super.onStop();
+    }
+
+    @Override
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
@@ -57,11 +66,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     private void initView() {
         buttonSuccess = findViewById(R.id.buttonSuccess);
-        textListPos1 = findViewById(R.id.textListPos1);
-        textListPos2 = findViewById(R.id.textListPos2);
-        textListPos3 = findViewById(R.id.textListPos3);
-        textListPos4 = findViewById(R.id.textListPos4);
-        textListPos5 = findViewById(R.id.textListPos5);
         editTextSelectCity = findViewById(R.id.editTextSelectCity);
         checkBoxPressure = findViewById(R.id.checkBoxPressure);
         checkBoxWindSpeed = findViewById(R.id.checkBoxWindSpeed);
@@ -69,11 +73,6 @@ public class WeatherActivity extends AppCompatActivity {
 
     private void setOnClickButton() {
         buttonSuccess.setOnClickListener(onClickListenerMain);
-        textListPos1.setOnClickListener(onClickListenerChangeCity);
-        textListPos2.setOnClickListener(onClickListenerChangeCity);
-        textListPos3.setOnClickListener(onClickListenerChangeCity);
-        textListPos4.setOnClickListener(onClickListenerChangeCity);
-        textListPos5.setOnClickListener(onClickListenerChangeCity);
     }
 
     private View.OnClickListener onClickListenerMain = new View.OnClickListener() {
@@ -87,12 +86,9 @@ public class WeatherActivity extends AppCompatActivity {
         }
     };
 
-    private View.OnClickListener onClickListenerChangeCity = new View.OnClickListener() {
-        @Override
-        public void onClick(View view) {
-            TextView cityView = (TextView) view;
-            String textFromCityView = cityView.getText().toString();
-            editTextSelectCity.setText(textFromCityView);
-        }
-    };
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void changeCityEvent(ChangeCityEvent changeCityEvent) {
+        editTextSelectCity.setText(changeCityEvent.city);
+    }
 }

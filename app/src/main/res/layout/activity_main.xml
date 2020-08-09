@@ -6,68 +6,18 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <ImageView
-        android:id="@+id/imageMainWeather"
-        android:layout_width="100dp"
-        android:layout_height="100dp"
-        android:src="@drawable/weather1"
-        android:contentDescription="@string/app_name"
-        app:layout_constraintBottom_toTopOf="@+id/textMainDegree"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.498"
-        app:layout_constraintStart_toStartOf="parent" />
-
-    <TextView
-        android:id="@+id/textMainDegree"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/degree"
-        android:textSize="85sp"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintLeft_toLeftOf="parent"
-        app:layout_constraintRight_toRightOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
-
-    <TextView
-        android:id="@+id/textMainCity"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="24dp"
-        android:text="@string/city"
-        android:textSize="35sp"
-
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textMainDegree" />
-
-    <ImageButton
-        android:id="@+id/buttonSettings"
-        android:layout_width="75dp"
-        android:layout_height="75dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:src="@drawable/settings"
-        android:contentDescription="@string/settings"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent" />
-
-    <ImageButton
-        android:id="@+id/buttonChangeCity"
-        android:layout_width="40dp"
-        android:layout_height="40dp"
-        android:background="@android:color/transparent"
-        android:scaleType="centerInside"
-        android:src="@drawable/change"
-        android:contentDescription="@string/selectCity"
-        app:layout_constraintBottom_toBottomOf="@+id/textMainCity"
-        app:layout_constraintStart_toEndOf="@+id/textMainCity" />
-
-    <Button
-        android:id="@+id/tempButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/for_normal_weather"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent" />
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <fragment
+            android:id="@+id/fragmentWeather"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:name="org.sochidrive.weather.FragmentWeather"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintBottom_toBottomOf="parent"/>
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

@@ -23,5 +23,4 @@
     <string name="myLogs" translatable="false">myLogs</string>
     <string name="onSaveInstanceState">onSaveInstanceState</string>
     <string name="mainWeather">Current weather</string>
-    <string name="for_normal_weather">For normal weather</string>
 </resources>
