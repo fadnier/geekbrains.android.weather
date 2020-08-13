@@ -1,6 +1,7 @@
 package org.sochidrive.weather;
 
 import android.content.Intent;
+import android.content.res.Configuration;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -20,14 +21,15 @@ import java.util.Objects;
 import static android.app.Activity.RESULT_OK;
 
 public class FragmentWeather extends Fragment {
-    ImageView imageMainWeather;
-    TextView textMainDegree;
-    TextView textMainCity;
-    ImageButton buttonSettings;
-    ImageButton buttonChangeCity;
-    static final String degreeDataKey = "degreeDataKey";
-    static final String cityDataKey = "cityDataKey";
+    private ImageView imageMainWeather;
+    private TextView textMainDegree;
+    private TextView textMainCity;
+    private ImageButton buttonSettings;
+    private ImageButton buttonChangeCity;
+    private static final String degreeDataKey = "degreeDataKey";
+    private static final String cityDataKey = "cityDataKey";
     private final int requestCodeChangeCity = 1616;
+    private boolean isHorizontal;
 
     @Nullable
     @Override
@@ -75,6 +77,14 @@ public class FragmentWeather extends Fragment {
             textMainCity.setText(city);
         }
 
+        isHorizontal = getResources().getConfiguration().orientation
+                == Configuration.ORIENTATION_LANDSCAPE;
+
+        if (isHorizontal) {
+            buttonChangeCity.setVisibility(View.INVISIBLE);
+        } else {
+            buttonChangeCity.setVisibility(View.VISIBLE);
+        }
     }
 
     private void initView(@NonNull View view) {
@@ -120,6 +130,6 @@ public class FragmentWeather extends Fragment {
     @Subscribe
     @SuppressWarnings("unused")
     public void changeCityEvent(ChangeCityEvent changeCityEvent) {
-        textMainCity.setText(changeCityEvent.city);
+        textMainCity.setText(changeCityEvent.getCity());
     }
 }

@@ -7,7 +7,7 @@ import android.widget.Button;
 import androidx.appcompat.app.AppCompatActivity;
 
 public class SettingsActivity extends AppCompatActivity {
-    Button buttonBack;
+    private Button buttonBack;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -6,18 +6,22 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
-    <FrameLayout
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
-        <fragment
-            android:id="@+id/fragmentWeather"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:name="org.sochidrive.weather.FragmentWeather"
-            app:layout_constraintStart_toStartOf="parent"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="parent"
-            app:layout_constraintBottom_toBottomOf="parent"/>
-    </FrameLayout>
+    <fragment
+        android:id="@+id/fragmentWeather"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:name="org.sochidrive.weather.FragmentWeather"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/fragmentWeek"/>
+    <fragment
+        android:id="@+id/fragmentWeek"
+        android:layout_width="0dp"
+        android:layout_height="200dp"
+        android:name="org.sochidrive.weather.FragmentWeek"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

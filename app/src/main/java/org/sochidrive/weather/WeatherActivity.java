@@ -59,7 +59,7 @@ public class WeatherActivity extends AppCompatActivity {
     protected void onRestoreInstanceState(@NonNull Bundle savedInstanceState) {
         super.onRestoreInstanceState(savedInstanceState);
 
-        SingletonSave container = (SingletonSave)savedInstanceState.getSerializable(windDataKey);
+        savedInstanceState.getSerializable(windDataKey);
         checkBoxPressure.setChecked(SingletonSave.checkBoxPressure);
         checkBoxWindSpeed.setChecked(SingletonSave.checkBoxWindSpeed);
     }
@@ -89,6 +89,6 @@ public class WeatherActivity extends AppCompatActivity {
     @Subscribe
     @SuppressWarnings("unused")
     public void changeCityEvent(ChangeCityEvent changeCityEvent) {
-        editTextSelectCity.setText(changeCityEvent.city);
+        editTextSelectCity.setText(changeCityEvent.getCity());
     }
 }
