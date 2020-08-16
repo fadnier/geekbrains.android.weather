@@ -1,9 +1,13 @@
 package org.sochidrive.weather;
 
 public class ChangeCityEvent {
-    String city;
+    private String city;
 
     ChangeCityEvent(String city) {
         this.city = city;
+    }
+
+    public String getCity() {
+        return city;
     }
 }

@@ -9,7 +9,7 @@
 
     <fragment
         android:id="@+id/fragmentCity"
-        android:layout_width="300dp"
+        android:layout_width="250dp"
         android:minWidth="250dp"
         android:layout_height="0dp"
         android:name="org.sochidrive.weather.FragmentCity"

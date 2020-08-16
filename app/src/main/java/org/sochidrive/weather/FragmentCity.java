@@ -9,13 +9,17 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-public class FragmentCity extends Fragment {
-    TextView textListPos1;
-    TextView textListPos2;
-    TextView textListPos3;
-    TextView textListPos4;
-    TextView textListPos5;
+import java.util.ArrayList;
+import java.util.Arrays;
+
+public class FragmentCity extends Fragment implements CityBtnOnItemClick {
+    private RecyclerView recyclerView;
+    private RecyclerDataAdapter adapter;
+    //private ArrayList<String> listData = new ArrayList<>(Arrays.asList(getString(R.string.moscow),getString(R.string.saint_petersburg),getString(R.string.yekaterinburg),getString(R.string.novosibirsk),getString(R.string.sochi)));
+    private ArrayList<String> listData = new ArrayList<>(Arrays.asList("Moscow","Saint Petersburg","Yekaterinburg","Novosibirsk","Sochi"));
 
     @Nullable
     @Override
@@ -27,23 +31,25 @@ public class FragmentCity extends Fragment {
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
         initView(view);
-        setOnClickButton();
+        setupRecyclerView();
     }
 
     private void initView(View view) {
-        textListPos1 = view.findViewById(R.id.textListPos1);
-        textListPos2 = view.findViewById(R.id.textListPos2);
-        textListPos3 = view.findViewById(R.id.textListPos3);
-        textListPos4 = view.findViewById(R.id.textListPos4);
-        textListPos5 = view.findViewById(R.id.textListPos5);
+        recyclerView = view.findViewById(R.id.recyclerViewCity);
     }
 
-    private void setOnClickButton() {
-        textListPos1.setOnClickListener(onClickListenerChangeCity);
-        textListPos2.setOnClickListener(onClickListenerChangeCity);
-        textListPos3.setOnClickListener(onClickListenerChangeCity);
-        textListPos4.setOnClickListener(onClickListenerChangeCity);
-        textListPos5.setOnClickListener(onClickListenerChangeCity);
+    private void setupRecyclerView() {
+        LinearLayoutManager layoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL,false);
+        adapter = new RecyclerDataAdapter(listData,this);
+
+        recyclerView.setLayoutManager(layoutManager);
+        recyclerView.setAdapter(adapter);
+
+    }
+
+    @Override
+    public void onItemClicked(String itemText) {
+        EventBus.getBus().post(new ChangeCityEvent(itemText));
     }
 
     private View.OnClickListener onClickListenerChangeCity = new View.OnClickListener() {
