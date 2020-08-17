@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
+import com.google.android.material.snackbar.Snackbar;
 
 import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
@@ -18,8 +19,7 @@ import java.util.Arrays;
 public class FragmentCity extends Fragment implements CityBtnOnItemClick {
     private RecyclerView recyclerView;
     private RecyclerDataAdapter adapter;
-    //private ArrayList<String> listData = new ArrayList<>(Arrays.asList(getString(R.string.moscow),getString(R.string.saint_petersburg),getString(R.string.yekaterinburg),getString(R.string.novosibirsk),getString(R.string.sochi)));
-    private ArrayList<String> listData = new ArrayList<>(Arrays.asList("Moscow","Saint Petersburg","Yekaterinburg","Novosibirsk","Sochi"));
+    private ArrayList<String> listData;
 
     @Nullable
     @Override
@@ -30,6 +30,7 @@ public class FragmentCity extends Fragment implements CityBtnOnItemClick {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        listData = new ArrayList<>(Arrays.asList(getString(R.string.moscow),getString(R.string.saint_petersburg),getString(R.string.yekaterinburg),getString(R.string.novosibirsk),getString(R.string.sochi)));
         initView(view);
         setupRecyclerView();
     }
@@ -48,8 +49,14 @@ public class FragmentCity extends Fragment implements CityBtnOnItemClick {
     }
 
     @Override
-    public void onItemClicked(String itemText) {
-        EventBus.getBus().post(new ChangeCityEvent(itemText));
+    public void onItemClicked(final String itemText) {
+        Snackbar.make(getView(), "Изменить город?", Snackbar.LENGTH_LONG).setAction("Изменить", new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                EventBus.getBus().post(new ChangeCityEvent(itemText));
+            }
+        }).show();
+
     }
 
     private View.OnClickListener onClickListenerChangeCity = new View.OnClickListener() {

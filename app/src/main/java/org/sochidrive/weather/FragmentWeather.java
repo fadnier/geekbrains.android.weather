@@ -29,6 +29,7 @@ public class FragmentWeather extends Fragment {
     private static final String degreeDataKey = "degreeDataKey";
     private static final String cityDataKey = "cityDataKey";
     private final int requestCodeChangeCity = 1616;
+    private final int requestCodeTheme = 7877;
     private boolean isHorizontal;
 
     @Nullable
@@ -108,13 +109,17 @@ public class FragmentWeather extends Fragment {
             String strData = data.getStringExtra(WeatherActivity.cityDataKey);
             textMainCity.setText(strData);
         }
+        if (requestCode == requestCodeTheme){
+            getActivity().recreate();
+        }
+
     }
 
     private View.OnClickListener onClickListenerSettings = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
             Intent intent = new Intent(Objects.requireNonNull(getActivity()).getApplication(),SettingsActivity.class);
-            startActivity(intent);
+            startActivityForResult(intent,requestCodeTheme);
         }
     };
 

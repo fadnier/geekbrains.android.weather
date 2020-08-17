@@ -3,20 +3,22 @@ package org.sochidrive.weather;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
-import android.widget.Button;
 import android.widget.CheckBox;
-import android.widget.TextView;
 
 import androidx.annotation.NonNull;
-import androidx.appcompat.app.AppCompatActivity;
 
+import com.google.android.material.button.MaterialButton;
+import com.google.android.material.textfield.TextInputEditText;
+import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.otto.Subscribe;
 
-public class WeatherActivity extends AppCompatActivity {
-    Button buttonSuccess;
-    TextView editTextSelectCity;
-    CheckBox checkBoxWindSpeed;
-    CheckBox checkBoxPressure;
+public class WeatherActivity extends BaseActivity {
+
+    private MaterialButton buttonSuccess;
+    private TextInputEditText editTextSelectCity;
+    private CheckBox checkBoxWindSpeed;
+    private CheckBox checkBoxPressure;
+    private TextInputLayout TILSelectCity;
     private final String windDataKey = "windDataKey";
     final static String cityDataKey = "cityDataKey";
 
@@ -69,6 +71,7 @@ public class WeatherActivity extends AppCompatActivity {
         editTextSelectCity = findViewById(R.id.editTextSelectCity);
         checkBoxPressure = findViewById(R.id.checkBoxPressure);
         checkBoxWindSpeed = findViewById(R.id.checkBoxWindSpeed);
+        TILSelectCity = findViewById(R.id.textInputLayoutSC);
     }
 
     private void setOnClickButton() {
