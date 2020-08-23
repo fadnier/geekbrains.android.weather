@@ -34,7 +34,8 @@
         android:layout_width="0dp"
         android:layout_height="wrap_content"
         app:errorEnabled="false"
-        app:layout_constraintEnd_toStartOf="@+id/buttonSuccess"
+        android:enabled="false"
+        app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/checkBoxPressure">
@@ -51,12 +52,11 @@
         android:id="@+id/buttonSuccess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="@string/success"
-        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutSC"
+        android:text="@string/back"
+        app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/textInputLayoutSC"
-        app:layout_constraintTop_toTopOf="@+id/textInputLayoutSC" />
+        app:layout_constraintStart_toStartOf="parent"
+         />
 
 
     <fragment
@@ -64,7 +64,7 @@
         android:name="org.sochidrive.weather.FragmentCity"
         android:layout_width="0dp"
         android:layout_height="0dp"
-        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintBottom_toTopOf="@id/buttonSuccess"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSC" />

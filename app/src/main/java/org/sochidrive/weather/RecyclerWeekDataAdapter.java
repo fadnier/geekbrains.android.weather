@@ -1,6 +1,5 @@
 package org.sochidrive.weather;
 
-import android.graphics.drawable.Drawable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -10,15 +9,19 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Random;
+import org.sochidrive.weather.model.WeatherFiveDayRequest;
+
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
+import java.util.Locale;
 
 
 public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDataAdapter.ViewHolder> {
-    private ArrayList<String> data;
+    private WeatherFiveDayRequest data;
 
-    public RecyclerWeekDataAdapter(ArrayList<String> data) {
-        this.data = data;
+    public RecyclerWeekDataAdapter(WeatherFiveDayRequest weatherFiveDayRequest) {
+        this.data = weatherFiveDayRequest;
     }
 
     @NonNull
@@ -30,13 +33,17 @@ public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDa
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerWeekDataAdapter.ViewHolder holder, int position) {
-        String text = data.get(position);
-        holder.setTextToTextView(text);
+        Timestamp timestamp = new Timestamp(data.getList()[position].getDt()*1000);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.getDefault());
+        String date = dateFormat.format(new Date(timestamp.getTime()));
+        String degree = String.format("%+d", (int)(data.getList()[position].getMain().getTemp()-273.15f));
+        String weather = data.getList()[position].getWeather()[0].getDescription();
+        holder.setTextToTextView(date,degree,weather);
     }
 
     @Override
     public int getItemCount() {
-        return data == null ? 0 : data.size();
+        return data == null ? 0 : data.getList().length;
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
@@ -51,20 +58,30 @@ public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDa
             imageViewWeather = itemView.findViewById(R.id.imageViewWeather);
         }
 
-        void setTextToTextView(String text) {
-            Random random = new Random();
-            textViewWeek.setText(text);
-            textViewDegree.setText("+"+random.nextInt(50));
-            if(random.nextInt(5)==1) {
+        void setTextToTextView(String date,String degree, String weather) {
+            textViewWeek.setText(date);
+            textViewDegree.setText(degree);
+
+            if(weather.equals("clear sky")) {
                 imageViewWeather.setImageResource(R.drawable.weather1);
-            } else if(random.nextInt(5)==2) {
+            } else if(weather.equals("few clouds")) {
                 imageViewWeather.setImageResource(R.drawable.weather2);
-            } else if(random.nextInt(5)==3) {
+            } else if(weather.equals("scattered clouds")) {
+                imageViewWeather.setImageResource(R.drawable.weather2);
+            } else if(weather.equals("broken clouds")) {
+                imageViewWeather.setImageResource(R.drawable.weather2);
+            } else if(weather.equals("shower rain")) {
                 imageViewWeather.setImageResource(R.drawable.weather3);
-            } else if(random.nextInt(5)==4) {
+            } else if(weather.equals("rain")) {
+                imageViewWeather.setImageResource(R.drawable.weather3);
+            } else if(weather.equals("thunderstorm")) {
                 imageViewWeather.setImageResource(R.drawable.weather4);
-            } else {
+            } else if(weather.equals("snow")) {
                 imageViewWeather.setImageResource(R.drawable.weather5);
+            } else if(weather.equals("mist")) {
+                imageViewWeather.setImageResource(R.drawable.weather2);
+            } else {
+                imageViewWeather.setImageResource(R.drawable.weather1);
             }
 
         }

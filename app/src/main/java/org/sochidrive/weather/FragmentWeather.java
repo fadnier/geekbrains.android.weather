@@ -1,5 +1,6 @@
 package org.sochidrive.weather;
 
+import android.content.Context;
 import android.content.Intent;
 import android.content.res.Configuration;
 import android.os.Bundle;
@@ -16,6 +17,8 @@ import androidx.fragment.app.Fragment;
 
 import com.squareup.otto.Subscribe;
 
+import org.sochidrive.weather.model.WeatherRequest;
+
 import java.util.Objects;
 
 import static android.app.Activity.RESULT_OK;
@@ -31,6 +34,7 @@ public class FragmentWeather extends Fragment {
     private final int requestCodeChangeCity = 1616;
     private final int requestCodeTheme = 7877;
     private boolean isHorizontal;
+    private String city = "Moscow";
 
     @Nullable
     @Override
@@ -44,6 +48,7 @@ public class FragmentWeather extends Fragment {
         setRetainInstance(true);
         initView(view);
         setOnClickButton();
+        new Network(city,this);
     }
 
     @Override
@@ -57,15 +62,15 @@ public class FragmentWeather extends Fragment {
     }
 
     @Override
-    public void onStart() {
-        super.onStart();
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
         EventBus.getBus().register(this);
     }
 
     @Override
-    public void onStop() {
+    public void onDetach() {
         EventBus.getBus().unregister(this);
-        super.onStop();
+        super.onDetach();
     }
 
     @Override
@@ -76,6 +81,7 @@ public class FragmentWeather extends Fragment {
             textMainDegree.setText(degree);
             String city = savedInstanceState.getString(cityDataKey);
             textMainCity.setText(city);
+            this.city = city;
         }
 
         isHorizontal = getResources().getConfiguration().orientation
@@ -94,6 +100,7 @@ public class FragmentWeather extends Fragment {
         textMainCity = view.findViewById(R.id.textMainCity);
         buttonSettings = view.findViewById(R.id.buttonSettings);
         buttonChangeCity = view.findViewById(R.id.buttonChangeCity);
+        textMainCity.setText("Москва");
     }
 
     private void setOnClickButton() {
@@ -110,7 +117,7 @@ public class FragmentWeather extends Fragment {
             textMainCity.setText(strData);
         }
         if (requestCode == requestCodeTheme){
-            getActivity().recreate();
+            Objects.requireNonNull(getActivity()).recreate();
         }
 
     }
@@ -132,9 +139,36 @@ public class FragmentWeather extends Fragment {
         }
     };
 
+    public void getData(WeatherRequest weatherRequest) {
+        textMainDegree.setText(String.format("%+d", (int)(weatherRequest.getMain().getTemp()-273.15f)));
+        if(weatherRequest.getWeather()[0].getDescription().equals("clear sky")) {
+            imageMainWeather.setImageResource(R.drawable.weather1);
+        } else if(weatherRequest.getWeather()[0].getDescription().equals("few clouds")) {
+            imageMainWeather.setImageResource(R.drawable.weather2);
+        } else if(weatherRequest.getWeather()[0].getDescription().equals("scattered clouds")) {
+            imageMainWeather.setImageResource(R.drawable.weather2);
+        } else if(weatherRequest.getWeather()[0].getDescription().equals("broken clouds")) {
+            imageMainWeather.setImageResource(R.drawable.weather2);
+        } else if(weatherRequest.getWeather()[0].getDescription().equals("shower rain")) {
+            imageMainWeather.setImageResource(R.drawable.weather3);
+        } else if(weatherRequest.getWeather()[0].getDescription().equals("rain")) {
+            imageMainWeather.setImageResource(R.drawable.weather3);
+        } else if(weatherRequest.getWeather()[0].getDescription().equals("thunderstorm")) {
+            imageMainWeather.setImageResource(R.drawable.weather4);
+        } else if(weatherRequest.getWeather()[0].getDescription().equals("snow")) {
+            imageMainWeather.setImageResource(R.drawable.weather5);
+        } else if(weatherRequest.getWeather()[0].getDescription().equals("mist")) {
+            imageMainWeather.setImageResource(R.drawable.weather2);
+        } else {
+            imageMainWeather.setImageResource(R.drawable.weather1);
+        }
+    }
+
     @Subscribe
     @SuppressWarnings("unused")
     public void changeCityEvent(ChangeCityEvent changeCityEvent) {
         textMainCity.setText(changeCityEvent.getCity());
+        city = changeCityEvent.getCity();
+        new Network(changeCityEvent.getCity(),this);
     }
 }

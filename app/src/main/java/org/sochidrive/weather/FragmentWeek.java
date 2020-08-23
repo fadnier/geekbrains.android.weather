@@ -1,5 +1,6 @@
 package org.sochidrive.weather;
 
+import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -11,13 +12,16 @@ import androidx.fragment.app.Fragment;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import java.util.ArrayList;
-import java.util.Arrays;
+import com.squareup.otto.Subscribe;
+
+import org.sochidrive.weather.model.WeatherFiveDayRequest;
 
 public class FragmentWeek extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerWeekDataAdapter adapter;
-    private ArrayList<String> listData = new ArrayList<>(Arrays.asList("Monday","Tuesday","Wednesday","Thursday","Friday","Saturday","Sunday"));
+    private WeatherFiveDayRequest listData;
+    private static final String cityWeekDataKey = "cityDataKey";
+    private String city = "Moscow";
 
     @Nullable
     @Override
@@ -28,8 +32,27 @@ public class FragmentWeek extends Fragment {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
+        setRetainInstance(true);
         initView(view);
-        setupRecyclerView();
+        new Network(city,this);
+    }
+
+    @Override
+    public void onAttach(@NonNull Context context) {
+        super.onAttach(context);
+        EventBus.getBus().register(this);
+    }
+
+    @Override
+    public void onSaveInstanceState(@NonNull Bundle outState) {
+        outState.putString(cityWeekDataKey, city);
+        super.onSaveInstanceState(outState);
+    }
+
+    @Override
+    public void onDetach() {
+        EventBus.getBus().unregister(this);
+        super.onDetach();
     }
 
     private void initView(View view) {
@@ -43,5 +66,25 @@ public class FragmentWeek extends Fragment {
         recyclerView.setLayoutManager(layoutManager);
         recyclerView.setAdapter(adapter);
 
+    }
+
+    @Override
+    public void onActivityCreated(@Nullable Bundle savedInstanceState) {
+        super.onActivityCreated(savedInstanceState);
+        if (savedInstanceState != null) {
+            city = savedInstanceState.getString(cityWeekDataKey);
+        }
+    }
+
+    public void getData(WeatherFiveDayRequest weatherFiveDayRequest) {
+        this.listData = weatherFiveDayRequest;
+        setupRecyclerView();
+    }
+
+    @Subscribe
+    @SuppressWarnings("unused")
+    public void changeCityEvent(ChangeCityEvent changeCityEvent) {
+        city = changeCityEvent.getCity();
+        new Network(city,this);
     }
 }
