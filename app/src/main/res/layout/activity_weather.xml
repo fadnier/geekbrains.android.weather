@@ -29,30 +29,34 @@
         app:layout_constraintStart_toEndOf="@+id/checkBoxWindSpeed"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <EditText
-        android:id="@+id/editTextSelectCity"
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/textInputLayoutSC"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
-        android:layout_marginTop="16dp"
-        android:ems="10"
-        android:gravity="center"
-        android:hint="@string/selectCity"
-        android:autofillHints="@string/selectCity"
-        android:inputType="textPersonName"
+        app:errorEnabled="false"
         app:layout_constraintEnd_toStartOf="@+id/buttonSuccess"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxPressure" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxPressure">
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/editTextSelectCity"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="@string/selectCity"
+            android:inputType="textNoSuggestions"
+            />
+    </com.google.android.material.textfield.TextInputLayout>
 
-    <Button
+    <com.google.android.material.button.MaterialButton
         android:id="@+id/buttonSuccess"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="@string/success"
-        app:layout_constraintBottom_toBottomOf="@+id/editTextSelectCity"
+        app:layout_constraintBottom_toBottomOf="@+id/textInputLayoutSC"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toEndOf="@+id/editTextSelectCity" />
+        app:layout_constraintStart_toEndOf="@+id/textInputLayoutSC"
+        app:layout_constraintTop_toTopOf="@+id/textInputLayoutSC" />
 
 
     <fragment
@@ -63,6 +67,6 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/editTextSelectCity" />
+        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSC" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>
