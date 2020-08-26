@@ -7,8 +7,8 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public abstract class BaseActivity extends AppCompatActivity {
 
-    private static final String NameSharedPreference = "LOGIN";
-    private static final String IsDarkTheme = "IS_DARK_THEME";
+    private static final String nameSharedPreference = "LOGIN";
+    private static final String isDarkTheme = "IS_DARK_THEME";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -21,15 +21,14 @@ public abstract class BaseActivity extends AppCompatActivity {
     }
 
     protected boolean isDarkTheme() {
-        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference, MODE_PRIVATE);
-        return sharedPref.getBoolean(IsDarkTheme, true);
+        SharedPreferences sharedPref = getSharedPreferences(nameSharedPreference, MODE_PRIVATE);
+        return sharedPref.getBoolean(isDarkTheme, true);
     }
 
     protected void setDarkTheme(boolean isDarkTheme) {
-        SharedPreferences sharedPref = getSharedPreferences(NameSharedPreference, MODE_PRIVATE);
-        // Настройки сохраняются посредством специального класса editor.
+        SharedPreferences sharedPref = getSharedPreferences(nameSharedPreference, MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPref.edit();
-        editor.putBoolean(IsDarkTheme, isDarkTheme);
+        editor.putBoolean(BaseActivity.isDarkTheme, isDarkTheme);
         editor.apply();
     }
 

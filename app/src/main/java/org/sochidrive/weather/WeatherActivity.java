@@ -9,8 +9,9 @@ import androidx.annotation.NonNull;
 
 import com.google.android.material.button.MaterialButton;
 import com.google.android.material.textfield.TextInputEditText;
-import com.google.android.material.textfield.TextInputLayout;
 import com.squareup.otto.Subscribe;
+
+import java.util.Objects;
 
 public class WeatherActivity extends BaseActivity {
 
@@ -18,7 +19,6 @@ public class WeatherActivity extends BaseActivity {
     private TextInputEditText editTextSelectCity;
     private CheckBox checkBoxWindSpeed;
     private CheckBox checkBoxPressure;
-    private TextInputLayout TILSelectCity;
     private final String windDataKey = "windDataKey";
     final static String cityDataKey = "cityDataKey";
 
@@ -71,7 +71,6 @@ public class WeatherActivity extends BaseActivity {
         editTextSelectCity = findViewById(R.id.editTextSelectCity);
         checkBoxPressure = findViewById(R.id.checkBoxPressure);
         checkBoxWindSpeed = findViewById(R.id.checkBoxWindSpeed);
-        TILSelectCity = findViewById(R.id.textInputLayoutSC);
     }
 
     private void setOnClickButton() {
@@ -81,7 +80,7 @@ public class WeatherActivity extends BaseActivity {
     private View.OnClickListener onClickListenerMain = new View.OnClickListener() {
         @Override
         public void onClick(View view) {
-            String text = editTextSelectCity.getText().toString();
+            String text = Objects.requireNonNull(editTextSelectCity.getText()).toString();
             Intent dataIntent = new Intent();
             dataIntent.putExtra(cityDataKey, text);
             setResult(RESULT_OK, dataIntent);

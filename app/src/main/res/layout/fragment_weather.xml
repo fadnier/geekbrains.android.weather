@@ -46,6 +46,8 @@
         android:contentDescription="@string/settings"
         android:scaleType="centerInside"
         android:src="@drawable/settings"
+        android:paddingEnd="10dp"
+        android:paddingTop="10dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent" />
 
