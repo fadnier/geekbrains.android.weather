@@ -1,4 +1,4 @@
-package org.sochidrive.weather;
+package org.sochidrive.weather.ui.home;
 
 import android.content.Context;
 import android.content.Intent;
@@ -15,11 +15,16 @@ import androidx.fragment.app.Fragment;
 
 import com.squareup.otto.Subscribe;
 
+import org.sochidrive.weather.ChangeCityEvent;
+import org.sochidrive.weather.EventBus;
+import org.sochidrive.weather.Network;
+import org.sochidrive.weather.R;
+import org.sochidrive.weather.SingletonSave;
 import org.sochidrive.weather.model.WeatherRequest;
 
 import static android.app.Activity.RESULT_OK;
 
-public class FragmentWeather extends Fragment {
+public class HomeFragment extends Fragment {
     private ImageView imageMainWeather;
     private TextView textMainDegree;
     private TextView textMainCity;
@@ -29,10 +34,9 @@ public class FragmentWeather extends Fragment {
     private final int requestCodeTheme = 7877;
     private String city;
 
-    @Nullable
     @Override
-    public View onCreateView(@NonNull LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.fragment_weather, container,false);
+    public View onCreateView(@NonNull LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
+        return inflater.inflate(R.layout.fragment_home, container, false);
     }
 
     @Override
@@ -48,6 +52,9 @@ public class FragmentWeather extends Fragment {
         outState.putString(degreeDataKey, degree);
         String city = textMainCity.getText().toString();
         outState.putString(cityDataKey, city);
+
+        SingletonSave.city = this.city;
+        outState.putSerializable(cityDataKey, SingletonSave.getInstance());
 
         super.onSaveInstanceState(outState);
     }
@@ -81,7 +88,11 @@ public class FragmentWeather extends Fragment {
         textMainDegree = view.findViewById(R.id.textMainDegree);
         textMainCity = view.findViewById(R.id.textMainCity);
 
+        SingletonSave.getInstance();
+        city = SingletonSave.city;
+        textMainCity.setText(city);
 
+        new Network(city,this);
     }
 
     @Override
@@ -89,7 +100,7 @@ public class FragmentWeather extends Fragment {
         super.onActivityResult(requestCode, resultCode, data);
 
         if(requestCode == this.requestCodeChangeCity && resultCode == RESULT_OK && data != null) {
-            String strData = data.getStringExtra(FragmentWeather.cityDataKey);
+            String strData = data.getStringExtra(HomeFragment.cityDataKey);
             textMainCity.setText(strData);
         }
         if (requestCode == requestCodeTheme){
@@ -127,8 +138,10 @@ public class FragmentWeather extends Fragment {
     @Subscribe
     @SuppressWarnings("unused")
     public void changeCityEvent(ChangeCityEvent changeCityEvent) {
+        SingletonSave.city = changeCityEvent.getCity();
+
         textMainCity.setText(changeCityEvent.getCity());
         city = changeCityEvent.getCity();
-        //new Network(changeCityEvent.getCity(),this);
+        new Network(changeCityEvent.getCity(),this);
     }
 }

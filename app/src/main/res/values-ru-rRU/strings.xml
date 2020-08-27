@@ -21,4 +21,7 @@
     <string name="onDestroy">Уничтожение</string>
     <string name="onSaveInstanceState">Сохранение инстанс состояния</string>
     <string name="mainWeather">Текущая погода</string>
+    <string name="menu_home">Главная</string>
+    <string name="developer">О разработчике</string>
+    <string name="feedback">Форма обратной связи</string>
 </resources>
