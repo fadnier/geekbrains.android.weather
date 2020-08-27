@@ -20,7 +20,7 @@ public class WeatherActivity extends BaseActivity {
     private CheckBox checkBoxWindSpeed;
     private CheckBox checkBoxPressure;
     private final String windDataKey = "windDataKey";
-    final static String cityDataKey = "cityDataKey";
+    private final static String cityDataKey = "cityDataKey";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {

@@ -21,7 +21,7 @@ public class FragmentWeek extends Fragment {
     private RecyclerWeekDataAdapter adapter;
     private WeatherFiveDayRequest listData;
     private static final String cityWeekDataKey = "cityDataKey";
-    private String city = "Moscow";
+    private String city;
 
     @Nullable
     @Override
@@ -34,6 +34,10 @@ public class FragmentWeek extends Fragment {
         super.onViewCreated(view, savedInstanceState);
         setRetainInstance(true);
         initView(view);
+
+        SingletonSave.getInstance();
+        city = SingletonSave.city;
+
         new Network(city,this);
     }
 
