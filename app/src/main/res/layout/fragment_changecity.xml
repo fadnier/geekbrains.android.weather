@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context=".ui.slideshow.ChangeCityFragment">
+    tools:context=".fragment.ChangeCityFragment">
 
     <CheckBox
         android:id="@+id/checkBoxWindSpeed"
@@ -52,7 +52,7 @@
 
     <fragment
         android:id="@+id/fragmentCity"
-        android:name="org.sochidrive.weather.FragmentCity"
+        android:name="org.sochidrive.weather.fragment.FragmentCity"
         android:layout_width="0dp"
         android:layout_height="0dp"
         app:layout_constraintBottom_toBottomOf="parent"

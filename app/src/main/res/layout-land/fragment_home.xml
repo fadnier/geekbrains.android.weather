@@ -11,16 +11,16 @@
         android:layout_width="0dp"
         android:layout_height="0dp"
         android:name="org.sochidrive.weather.fragment.FragmentWeather"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/fragmentWeek"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toTopOf="@id/fragmentWeek"/>
+        app:layout_constraintBottom_toBottomOf="parent"/>
     <fragment
         android:id="@+id/fragmentWeek"
-        android:layout_width="0dp"
-        android:layout_height="200dp"
+        android:layout_width="200dp"
+        android:layout_height="0dp"
         android:name="org.sochidrive.weather.fragment.FragmentWeek"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintBottom_toBottomOf="parent"/>
 </androidx.constraintlayout.widget.ConstraintLayout>

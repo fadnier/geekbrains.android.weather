@@ -1,4 +1,4 @@
-package org.sochidrive.weather.ui.slideshow;
+package org.sochidrive.weather.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;
@@ -24,7 +24,6 @@ public class ChangeCityFragment extends Fragment {
     private TextInputEditText editTextSelectCity;
     private CheckBox checkBoxWindSpeed;
     private CheckBox checkBoxPressure;
-    private final String windDataKey = "windDataKey";
 
     public View onCreateView(@NonNull LayoutInflater inflater,
                              ViewGroup container, Bundle savedInstanceState) {
@@ -38,14 +37,6 @@ public class ChangeCityFragment extends Fragment {
         initView(view);
     }
 
-    @Override
-    public void onSaveInstanceState(@NonNull Bundle saveInstanceState) {
-        SingletonSave.checkBoxPressure = checkBoxPressure.isChecked();
-        SingletonSave.checkBoxWindSpeed = checkBoxWindSpeed.isChecked();
-        saveInstanceState.putSerializable(windDataKey, SingletonSave.getInstance());
-
-        super.onSaveInstanceState(saveInstanceState);
-    }
 
     @Override
     public void onStart() {
@@ -62,11 +53,8 @@ public class ChangeCityFragment extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if (savedInstanceState != null) {
-            savedInstanceState.getSerializable(windDataKey);
-            checkBoxPressure.setChecked(SingletonSave.checkBoxPressure);
-            checkBoxWindSpeed.setChecked(SingletonSave.checkBoxWindSpeed);
-        }
+        checkBoxPressure.setChecked(SingletonSave.getCheckBoxPressure());
+        checkBoxWindSpeed.setChecked(SingletonSave.getCheckBoxWindSpeed());
     }
 
     private void initView(@NonNull View view) {

@@ -1,14 +1,17 @@
 package org.sochidrive.weather;
 
-import android.os.Build;
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Handler;
 import android.util.Log;
 
 import com.google.gson.Gson;
 
+import org.sochidrive.weather.fragment.FragmentWeather;
+import org.sochidrive.weather.fragment.FragmentWeek;
 import org.sochidrive.weather.model.WeatherFiveDayRequest;
 import org.sochidrive.weather.model.WeatherRequest;
-import org.sochidrive.weather.ui.home.HomeFragment;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -23,22 +26,24 @@ public class Network {
     private static final String WEATHER_URL = "https://api.openweathermap.org/data/2.5/weather?q=";
     private static final String WEATHER_FORECAST_URL = "https://api.openweathermap.org/data/2.5/forecast?q=";
     private static final String WEATHER_API_KEY = "6b844402e46cd60a2bfa8a12ab5204b6";
-    public FragmentWeek fragmentWeek;
-    public HomeFragment homeFragment;
+    private FragmentWeek fragmentWeek;
+    private FragmentWeather fragmentWeather;
+    private Activity activitySel;
 
 
     public Network(String city, FragmentWeek fragmentWeek) {
-        String url = WEATHER_URL+city+"&appid="+WEATHER_API_KEY;
+        SingletonSave.setCity(city);
         String urlForecast = WEATHER_FORECAST_URL+city+"&appid="+WEATHER_API_KEY;
         this.fragmentWeek = fragmentWeek;
+        this.activitySel = fragmentWeek.getActivity();
         getWeather(urlForecast,"forecast");
     }
 
-    public Network(String city, HomeFragment homeFragment) {
-        SingletonSave.city = city;
+    public Network(String city, FragmentWeather fragmentWeather) {
+        SingletonSave.setCity(city);
         String url = WEATHER_URL+city+"&appid="+WEATHER_API_KEY;
-        String urlForecast = WEATHER_FORECAST_URL+city+"&appid="+WEATHER_API_KEY;
-        this.homeFragment = homeFragment;
+        this.fragmentWeather = fragmentWeather;
+        this.activitySel = fragmentWeather.getActivity();
         getWeather(url,"weather");
     }
 
@@ -63,6 +68,20 @@ public class Network {
                             }
                         });
                     } catch (Exception e) {
+                        activitySel.runOnUiThread(new Runnable() {
+                            @Override
+                            public void run() {
+                                new AlertDialog.Builder(activitySel)
+                                        .setTitle(R.string.error_answer)
+                                        .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                            @Override
+                                            public void onClick(DialogInterface dialogInterface, int i) {
+
+                                            }
+                                        })
+                                        .setMessage(R.string.error_answer_text).show();
+                            }
+                        });
                         Log.e(TAG, "Fail connection", e);
                         e.printStackTrace();
                     } finally {
@@ -73,11 +92,24 @@ public class Network {
                 }
             }).start();
         } catch (MalformedURLException e) {
+            activitySel.runOnUiThread(new Runnable() {
+                @Override
+                public void run() {
+                    new AlertDialog.Builder(activitySel)
+                            .setTitle(R.string.error_url)
+                            .setNeutralButton(R.string.ok, new DialogInterface.OnClickListener() {
+                                @Override
+                                public void onClick(DialogInterface dialogInterface, int i) {
+
+                                }
+                            })
+                            .setMessage(R.string.error_url_text).show();
+                }
+            });
             Log.e(TAG, "Fail URI", e);
             e.printStackTrace();
         }
     }
-
 
     private String getLines(BufferedReader in) {
         StringBuilder rawData = new StringBuilder(1024);
@@ -106,7 +138,7 @@ public class Network {
         if(type.equals("weather")) {
             Gson gson = new Gson();
             final WeatherRequest weatherRequest = gson.fromJson(result, WeatherRequest.class);
-            homeFragment.getData(weatherRequest);
+            fragmentWeather.getData(weatherRequest);
         }
         if(type.equals("forecast")) {
             Gson gson = new Gson();

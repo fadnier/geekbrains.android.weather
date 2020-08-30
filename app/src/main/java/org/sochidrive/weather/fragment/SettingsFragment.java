@@ -1,4 +1,4 @@
-package org.sochidrive.weather.ui.gallery;
+package org.sochidrive.weather.fragment;
 
 import android.content.SharedPreferences;
 import android.os.Bundle;

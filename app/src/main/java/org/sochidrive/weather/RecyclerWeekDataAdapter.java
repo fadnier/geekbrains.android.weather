@@ -36,7 +36,7 @@ public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDa
         Timestamp timestamp = new Timestamp(data.getList()[position].getDt()*1000);
         SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.getDefault());
         String date = dateFormat.format(new Date(timestamp.getTime()));
-        String degree = String.format("%+d", (int)(data.getList()[position].getMain().getTemp()-273.15f));
+        String degree = String.format(Locale.getDefault(),"%+d", (int)(data.getList()[position].getMain().getTemp()-273.15f));
         String weather = data.getList()[position].getWeather()[0].getDescription();
         holder.setTextToTextView(date,degree,weather);
     }
@@ -61,29 +61,32 @@ public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDa
         void setTextToTextView(String date,String degree, String weather) {
             textViewWeek.setText(date);
             textViewDegree.setText(degree);
+            setImageWeather(weather);
+        }
 
-            if(weather.equals("clear sky")) {
-                imageViewWeather.setImageResource(R.drawable.weather1);
-            } else if(weather.equals("few clouds")) {
-                imageViewWeather.setImageResource(R.drawable.weather2);
-            } else if(weather.equals("scattered clouds")) {
-                imageViewWeather.setImageResource(R.drawable.weather2);
-            } else if(weather.equals("broken clouds")) {
-                imageViewWeather.setImageResource(R.drawable.weather2);
-            } else if(weather.equals("shower rain")) {
-                imageViewWeather.setImageResource(R.drawable.weather3);
-            } else if(weather.equals("rain")) {
-                imageViewWeather.setImageResource(R.drawable.weather3);
-            } else if(weather.equals("thunderstorm")) {
-                imageViewWeather.setImageResource(R.drawable.weather4);
-            } else if(weather.equals("snow")) {
-                imageViewWeather.setImageResource(R.drawable.weather5);
-            } else if(weather.equals("mist")) {
-                imageViewWeather.setImageResource(R.drawable.weather2);
-            } else {
-                imageViewWeather.setImageResource(R.drawable.weather1);
+        private void setImageWeather(String nameWeather) {
+            switch (nameWeather) {
+                case "few clouds":
+                case "scattered clouds":
+                case "broken clouds":
+                case "mist":
+                    imageViewWeather.setImageResource(R.drawable.weather2);
+                    break;
+                case "shower rain":
+                case "rain":
+                    imageViewWeather.setImageResource(R.drawable.weather3);
+                    break;
+                case "thunderstorm":
+                    imageViewWeather.setImageResource(R.drawable.weather4);
+                    break;
+                case "snow":
+                    imageViewWeather.setImageResource(R.drawable.weather5);
+                    break;
+                case "clear sky":
+                default:
+                    imageViewWeather.setImageResource(R.drawable.weather1);
+                    break;
             }
-
         }
     }
 }
