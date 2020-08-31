@@ -1,4 +1,4 @@
-package org.sochidrive.weather.ui.developer;
+package org.sochidrive.weather.fragment;
 
 import android.os.Bundle;
 import android.view.LayoutInflater;

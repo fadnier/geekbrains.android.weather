@@ -1,13 +1,15 @@
 package org.sochidrive.weather;
 
+import android.app.AlertDialog;
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.view.MenuItem;
 
-import org.sochidrive.weather.ui.developer.DeveloperFragment;
-import org.sochidrive.weather.ui.feedback.FeedbackFragment;
-import org.sochidrive.weather.ui.gallery.SettingsFragment;
-import org.sochidrive.weather.ui.home.HomeFragment;
-import org.sochidrive.weather.ui.slideshow.ChangeCityFragment;
+import org.sochidrive.weather.fragment.DeveloperFragment;
+import org.sochidrive.weather.fragment.FeedbackFragment;
+import org.sochidrive.weather.fragment.SettingsFragment;
+import org.sochidrive.weather.fragment.HomeFragment;
+import org.sochidrive.weather.fragment.ChangeCityFragment;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -111,6 +113,18 @@ public class MainActivity extends BaseActivity {
         fragmentTransaction.replace(R.id.fragmentContainer, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
+    }
+
+    public void sendDialogError() {
+        new AlertDialog.Builder(this)
+                .setTitle("Ошибка ответа сервера")
+                .setNeutralButton("Ок", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialogInterface, int i) {
+
+                    }
+                })
+                .setMessage("Не смог получить данные с сервера!").show();
     }
 
 }

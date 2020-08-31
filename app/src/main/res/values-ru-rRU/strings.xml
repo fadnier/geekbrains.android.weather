@@ -13,6 +13,7 @@
     <string name="yekaterinburg">Екатеринбург</string>
     <string name="novosibirsk">Новосибирск</string>
     <string name="sochi">Сочи</string>
+    <string name="kazan">Казань</string>
     <string name="onCreate">Создание</string>
     <string name="onStart">Старт</string>
     <string name="onResume">Возобновление</string>
@@ -24,4 +25,10 @@
     <string name="menu_home">Главная</string>
     <string name="developer">О разработчике</string>
     <string name="feedback">Форма обратной связи</string>
+    <string name="change_city">Изменить город?</string>
+    <string name="change">Изменить</string>
+    <string name="error_answer">Ошибка ответа сервера</string>
+    <string name="error_answer_text">Не смог получить данные с сервера!</string>
+    <string name="error_url">Ошибка соединения сервера</string>
+    <string name="error_url_text">Не смог соеденится с сервером!</string>
 </resources>
