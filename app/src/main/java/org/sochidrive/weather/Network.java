@@ -10,8 +10,10 @@ import com.google.gson.Gson;
 
 import org.sochidrive.weather.fragment.FragmentWeather;
 import org.sochidrive.weather.fragment.FragmentWeek;
+import org.sochidrive.weather.model.WeatherData;
 import org.sochidrive.weather.model.WeatherFiveDayRequest;
 import org.sochidrive.weather.model.WeatherRequest;
+import org.sochidrive.weather.model.WeatherWeekData;
 
 import java.io.BufferedReader;
 import java.io.IOException;
@@ -138,12 +140,14 @@ public class Network {
         if(type.equals("weather")) {
             Gson gson = new Gson();
             final WeatherRequest weatherRequest = gson.fromJson(result, WeatherRequest.class);
-            fragmentWeather.getData(weatherRequest);
+
+            fragmentWeather.getData(new WeatherData(weatherRequest));
         }
         if(type.equals("forecast")) {
             Gson gson = new Gson();
             final WeatherFiveDayRequest weatherFiveDayRequest = gson.fromJson(result, WeatherFiveDayRequest.class);
-            fragmentWeek.getData(weatherFiveDayRequest);
+
+            fragmentWeek.getData(new WeatherWeekData(weatherFiveDayRequest.getWeek()));
         }
     }
 

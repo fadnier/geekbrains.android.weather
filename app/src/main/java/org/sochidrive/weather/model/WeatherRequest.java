@@ -1,12 +1,29 @@
 package org.sochidrive.weather.model;
 
-public class WeatherRequest {
+import java.util.Locale;
+
+public class WeatherRequest implements WeatherDataInterface {
     private Coord coord;
     private Weather[] weather;
     private Main main;
     private Wind wind;
     private Clouds clouds;
     private String name;
+
+    @Override
+    public String getCityName() {
+        return getName();
+    }
+
+    @Override
+    public String getDegree() {
+        return String.format(Locale.getDefault(),"%+d", (int)(getMain().getTemp()-273.15f));
+    }
+
+    @Override
+    public String getWeatherDesc() {
+        return getWeather()[0].getDescription();
+    }
 
     public Coord getCoord() {
         return coord;

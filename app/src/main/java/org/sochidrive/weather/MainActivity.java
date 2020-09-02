@@ -22,7 +22,6 @@ import androidx.appcompat.widget.Toolbar;
 
 public class MainActivity extends BaseActivity {
 
-    private AppBarConfiguration mAppBarConfiguration;
     private NavigationView navigationView;
     private DrawerLayout drawer;
 
@@ -62,7 +61,7 @@ public class MainActivity extends BaseActivity {
                         break;
                     }
                     case R.id.nav_gallery: {
-                        setGalleryFragment();
+                        setSettingsFragment();
                         drawer.close();
                         break;
                     }
@@ -92,7 +91,7 @@ public class MainActivity extends BaseActivity {
         setFragment(fragment);
     }
 
-    private void setGalleryFragment() {
+    private void setSettingsFragment() {
         setFragment(new SettingsFragment());
     }
 
@@ -113,18 +112,6 @@ public class MainActivity extends BaseActivity {
         fragmentTransaction.replace(R.id.fragmentContainer, fragment);
         fragmentTransaction.addToBackStack(null);
         fragmentTransaction.commit();
-    }
-
-    public void sendDialogError() {
-        new AlertDialog.Builder(this)
-                .setTitle("Ошибка ответа сервера")
-                .setNeutralButton("Ок", new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface dialogInterface, int i) {
-
-                    }
-                })
-                .setMessage("Не смог получить данные с сервера!").show();
     }
 
 }
