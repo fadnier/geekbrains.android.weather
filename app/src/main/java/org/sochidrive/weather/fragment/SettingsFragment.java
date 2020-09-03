@@ -15,7 +15,6 @@ import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import org.sochidrive.weather.BaseActivity;
-import org.sochidrive.weather.MainActivity;
 import org.sochidrive.weather.R;
 
 import static android.content.Context.MODE_PRIVATE;
@@ -62,7 +61,7 @@ public class SettingsFragment extends Fragment {
         public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             setDarkTheme(isChecked);
             getActivity().recreate();
-
+            ((NavigationView) getActivity().findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_home);
         }
     };
 }
