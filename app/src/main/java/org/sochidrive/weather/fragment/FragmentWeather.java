@@ -19,9 +19,7 @@ import org.sochidrive.weather.EventBus;
 import org.sochidrive.weather.Network;
 import org.sochidrive.weather.R;
 import org.sochidrive.weather.SingletonSave;
-import org.sochidrive.weather.model.WeatherRequest;
-
-import java.util.Locale;
+import org.sochidrive.weather.model.WeatherData;
 
 public class FragmentWeather extends Fragment {
 
@@ -46,11 +44,12 @@ public class FragmentWeather extends Fragment {
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
         SingletonSave.getInstance();
-        if(SingletonSave.getWeatherRequestCurrent() != null) {
-            String degreeText = String.format(Locale.getDefault(),"%+d", (int)(SingletonSave.getWeatherRequestCurrent().getMain().getTemp()-273.15f));
-            textMainDegree.setText(degreeText);
+        if(SingletonSave.getWeatherData() != null) {
+            textMainDegree.setText(SingletonSave.getWeatherData().getDegree());
             textMainCity.setText(SingletonSave.getCity());
-            setImageWeather(SingletonSave.getWeatherRequestCurrent().getWeather()[0].getDescription());
+            setImageWeather(SingletonSave.getWeatherData().getWeatherDesc());
+        } else {
+            new Network(SingletonSave.getCity(),this);
         }
     }
 
@@ -72,12 +71,11 @@ public class FragmentWeather extends Fragment {
         textMainCity = view.findViewById(R.id.textMainCity);
     }
 
-    public void getData(WeatherRequest weatherRequest) {
-        SingletonSave.setWeatherRequestCurrent(weatherRequest);
-        String degreeText = String.format(Locale.getDefault(),"%+d", (int)(weatherRequest.getMain().getTemp()-273.15f));
-        textMainDegree.setText(degreeText);
+    public void getData(WeatherData weatherData) {
+        SingletonSave.setWeatherData(weatherData);
+        textMainDegree.setText(weatherData.getDegree());
         textMainCity.setText(SingletonSave.getCity());
-        setImageWeather(weatherRequest.getWeather()[0].getDescription());
+        setImageWeather(weatherData.getWeatherDesc());
     }
 
     private void setImageWeather(String nameWeather) {
@@ -108,7 +106,6 @@ public class FragmentWeather extends Fragment {
     @Subscribe
     @SuppressWarnings("unused")
     public void changeCityEvent(ChangeCityEvent changeCityEvent) {
-        textMainCity.setText(changeCityEvent.getCity());
         new Network(changeCityEvent.getCity(),this);
     }
 }

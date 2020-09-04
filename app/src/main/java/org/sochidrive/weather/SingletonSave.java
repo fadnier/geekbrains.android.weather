@@ -1,7 +1,7 @@
 package org.sochidrive.weather;
 
-import org.sochidrive.weather.model.WeatherFiveDayRequest;
-import org.sochidrive.weather.model.WeatherRequest;
+import org.sochidrive.weather.model.WeatherData;
+import org.sochidrive.weather.model.WeatherWeekData;
 
 import java.io.Serializable;
 
@@ -9,9 +9,25 @@ public class SingletonSave implements Serializable {
     private static Boolean checkBoxWindSpeed = false;
     private static Boolean checkBoxPressure = false;
     private static String city = "Москва";
-    private static WeatherRequest weatherRequestCurrent;
-    private static WeatherFiveDayRequest weatherFiveDayRequestCurrent;
+    private static WeatherData weatherData;
+    private static WeatherWeekData weatherWeekData;
     private static SingletonSave instance;
+
+    public static WeatherData getWeatherData() {
+        return weatherData;
+    }
+
+    public static void setWeatherData(WeatherData weatherData) {
+        SingletonSave.weatherData = weatherData;
+    }
+
+    public static WeatherWeekData getWeatherWeekData() {
+        return weatherWeekData;
+    }
+
+    public static void setWeatherWeekData(WeatherWeekData weatherWeekData) {
+        SingletonSave.weatherWeekData = weatherWeekData;
+    }
 
     public static Boolean getCheckBoxWindSpeed() {
         return checkBoxWindSpeed;
@@ -37,21 +53,6 @@ public class SingletonSave implements Serializable {
         SingletonSave.city = city;
     }
 
-    public static WeatherRequest getWeatherRequestCurrent() {
-        return weatherRequestCurrent;
-    }
-
-    public static void setWeatherRequestCurrent(WeatherRequest weatherRequestCurrent) {
-        SingletonSave.weatherRequestCurrent = weatherRequestCurrent;
-    }
-
-    public static WeatherFiveDayRequest getWeatherFiveDayRequestCurrent() {
-        return weatherFiveDayRequestCurrent;
-    }
-
-    public static void setWeatherFiveDayRequestCurrent(WeatherFiveDayRequest weatherFiveDayRequestCurrent) {
-        SingletonSave.weatherFiveDayRequestCurrent = weatherFiveDayRequestCurrent;
-    }
 
     private SingletonSave() {}
 

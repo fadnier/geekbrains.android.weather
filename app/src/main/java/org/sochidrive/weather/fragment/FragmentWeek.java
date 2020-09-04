@@ -21,12 +21,12 @@ import org.sochidrive.weather.Network;
 import org.sochidrive.weather.R;
 import org.sochidrive.weather.RecyclerWeekDataAdapter;
 import org.sochidrive.weather.SingletonSave;
-import org.sochidrive.weather.model.WeatherFiveDayRequest;
+import org.sochidrive.weather.model.WeatherWeekData;
 
 public class FragmentWeek extends Fragment {
     private RecyclerView recyclerView;
     private RecyclerWeekDataAdapter adapter;
-    private WeatherFiveDayRequest listData;
+    private WeatherWeekData listData;
 
     @Nullable
     @Override
@@ -75,15 +75,17 @@ public class FragmentWeek extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        if(SingletonSave.getWeatherFiveDayRequestCurrent() != null) {
-            listData = SingletonSave.getWeatherFiveDayRequestCurrent();
+        if(SingletonSave.getWeatherWeekData() != null) {
+            listData = SingletonSave.getWeatherWeekData();
+        } else {
+            new Network(SingletonSave.getCity(),this);
         }
         setupRecyclerView();
     }
 
-    public void getData(WeatherFiveDayRequest weatherFiveDayRequest) {
-        this.listData = weatherFiveDayRequest;
-        SingletonSave.setWeatherFiveDayRequestCurrent(weatherFiveDayRequest);
+    public void getData(WeatherWeekData weatherWeekData) {
+        this.listData = weatherWeekData;
+        SingletonSave.setWeatherWeekData(weatherWeekData);
         setupRecyclerView();
     }
 

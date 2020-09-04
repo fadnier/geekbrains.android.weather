@@ -11,6 +11,7 @@ import androidx.annotation.NonNull;
 import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
+import com.google.android.material.navigation.NavigationView;
 import com.google.android.material.switchmaterial.SwitchMaterial;
 
 import org.sochidrive.weather.BaseActivity;
@@ -60,6 +61,7 @@ public class SettingsFragment extends Fragment {
         public void onCheckedChanged(CompoundButton compoundButton, boolean isChecked) {
             setDarkTheme(isChecked);
             getActivity().recreate();
+            ((NavigationView) getActivity().findViewById(R.id.nav_view)).setCheckedItem(R.id.nav_home);
         }
     };
 }

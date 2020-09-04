@@ -9,19 +9,15 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import org.sochidrive.weather.model.WeatherFiveDayRequest;
+import org.sochidrive.weather.model.WeatherWeekData;
 
-import java.sql.Timestamp;
-import java.text.SimpleDateFormat;
-import java.util.Date;
-import java.util.Locale;
 
 
 public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDataAdapter.ViewHolder> {
-    private WeatherFiveDayRequest data;
+    private WeatherWeekData data;
 
-    public RecyclerWeekDataAdapter(WeatherFiveDayRequest weatherFiveDayRequest) {
-        this.data = weatherFiveDayRequest;
+    public RecyclerWeekDataAdapter(WeatherWeekData weatherWeekData) {
+        this.data = weatherWeekData;
     }
 
     @NonNull
@@ -33,17 +29,15 @@ public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDa
 
     @Override
     public void onBindViewHolder(@NonNull RecyclerWeekDataAdapter.ViewHolder holder, int position) {
-        Timestamp timestamp = new Timestamp(data.getList()[position].getDt()*1000);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy HH:mm", Locale.getDefault());
-        String date = dateFormat.format(new Date(timestamp.getTime()));
-        String degree = String.format(Locale.getDefault(),"%+d", (int)(data.getList()[position].getMain().getTemp()-273.15f));
-        String weather = data.getList()[position].getWeather()[0].getDescription();
+        String date = data.getWeek().get(position).getDate();
+        String degree = data.getWeek().get(position).getDegree();
+        String weather = data.getWeek().get(position).getWeatherDesc();
         holder.setTextToTextView(date,degree,weather);
     }
 
     @Override
     public int getItemCount() {
-        return data == null ? 0 : data.getList().length;
+        return data == null ? 0 : data.getWeek().size();
     }
 
     class ViewHolder extends RecyclerView.ViewHolder {
