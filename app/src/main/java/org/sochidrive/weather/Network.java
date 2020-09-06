@@ -2,13 +2,9 @@ package org.sochidrive.weather;
 
 import android.app.Activity;
 import android.app.AlertDialog;
-import android.content.DialogInterface;
-import android.os.Handler;
 import android.util.Log;
 
 import androidx.annotation.NonNull;
-
-import com.google.gson.Gson;
 
 import org.sochidrive.weather.fragment.FragmentWeather;
 import org.sochidrive.weather.fragment.FragmentWeek;
@@ -17,14 +13,6 @@ import org.sochidrive.weather.model.WeatherData;
 import org.sochidrive.weather.model.openweathermap.WeatherFiveDayRequest;
 import org.sochidrive.weather.model.openweathermap.WeatherRequest;
 import org.sochidrive.weather.model.WeatherWeekData;
-
-import java.io.BufferedReader;
-import java.io.IOException;
-import java.io.InputStreamReader;
-import java.net.MalformedURLException;
-import java.net.URL;
-
-import javax.net.ssl.HttpsURLConnection;
 
 import retrofit2.Call;
 import retrofit2.Callback;

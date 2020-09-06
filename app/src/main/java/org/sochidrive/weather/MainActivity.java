@@ -1,14 +1,12 @@
 package org.sochidrive.weather;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
 import org.sochidrive.weather.fragment.SettingsFragment;
 import org.sochidrive.weather.fragment.HomeFragment;
 import org.sochidrive.weather.fragment.ChangeCityFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;

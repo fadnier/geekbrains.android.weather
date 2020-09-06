@@ -20,7 +20,6 @@ import org.sochidrive.weather.RecyclerDataAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
-import java.util.Objects;
 
 public class FragmentCity extends Fragment implements CityBtnOnItemClick {
     private RecyclerView recyclerView;
