@@ -20,6 +20,7 @@ import org.sochidrive.weather.RecyclerDataAdapter;
 
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.Objects;
 
 public class FragmentCity extends Fragment implements CityBtnOnItemClick {
     private RecyclerView recyclerView;
@@ -55,11 +56,6 @@ public class FragmentCity extends Fragment implements CityBtnOnItemClick {
 
     @Override
     public void onItemClicked(final String itemText) {
-        Snackbar.make(getView(), R.string.change_city, Snackbar.LENGTH_LONG).setAction(R.string.change, new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                EventBus.getBus().post(new ChangeCityEvent(itemText));
-            }
-        }).show();
+        Snackbar.make(requireView(), R.string.change_city, Snackbar.LENGTH_LONG).setAction(R.string.change, v -> EventBus.getBus().post(new ChangeCityEvent(itemText))).show();
     }
 }

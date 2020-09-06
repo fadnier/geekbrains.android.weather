@@ -8,7 +8,7 @@ public class WeatherWeekData {
 
     public WeatherWeekData(List<List<String>> week) {
         for (int i = 0; i < week.size(); i++) {
-            this.addDayWeek(week.get(i).get(0), week.get(i).get(1), week.get(i).get(2));
+            this.addDayWeek(week.get(i).get(0), week.get(i).get(1), week.get(i).get(2), week.get(i).get(3));
         }
     }
 
@@ -16,31 +16,20 @@ public class WeatherWeekData {
         return week;
     }
 
-    public boolean addDayWeek (String date, String degree, String weatherDesc) {
-        return week.add(new WeekDay(date,degree,weatherDesc));
+    public boolean addDayWeek (String date, String degree, String weatherDesc, String icon) {
+        return week.add(new WeekDay(date,degree,weatherDesc,icon));
     }
 
-    public class WeekDay {
+    public class WeekDay extends WeatherData {
         private String date;
-        private String degree;
-        private String weatherDesc;
 
-        public WeekDay(String date, String degree, String weatherDesc) {
+        public WeekDay(String date, String degree, String weatherDesc, String icon) {
+            super(null,degree,weatherDesc,icon,null,null);
             this.date = date;
-            this.degree = degree;
-            this.weatherDesc = weatherDesc;
         }
 
         public String getDate() {
             return date;
-        }
-
-        public String getDegree() {
-            return degree;
-        }
-
-        public String getWeatherDesc() {
-            return weatherDesc;
         }
     }
 }

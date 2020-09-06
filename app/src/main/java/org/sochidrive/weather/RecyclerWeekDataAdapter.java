@@ -32,7 +32,8 @@ public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDa
         String date = data.getWeek().get(position).getDate();
         String degree = data.getWeek().get(position).getDegree();
         String weather = data.getWeek().get(position).getWeatherDesc();
-        holder.setTextToTextView(date,degree,weather);
+        String icon = data.getWeek().get(position).getIcon();
+        holder.setTextToTextView(date,degree,weather,icon);
     }
 
     @Override
@@ -52,31 +53,31 @@ public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDa
             imageViewWeather = itemView.findViewById(R.id.imageViewWeather);
         }
 
-        void setTextToTextView(String date,String degree, String weather) {
+        void setTextToTextView(String date,String degree, String weather, String icon) {
             textViewWeek.setText(date);
             textViewDegree.setText(degree);
-            setImageWeather(weather);
+            setImageWeather(icon);
         }
 
         private void setImageWeather(String nameWeather) {
             switch (nameWeather) {
-                case "few clouds":
-                case "scattered clouds":
-                case "broken clouds":
-                case "mist":
+                case "02n":
+                case "03n":
+                case "04n":
+                case "50n":
                     imageViewWeather.setImageResource(R.drawable.weather2);
                     break;
-                case "shower rain":
-                case "rain":
+                case "09n":
+                case "10n":
                     imageViewWeather.setImageResource(R.drawable.weather3);
                     break;
-                case "thunderstorm":
+                case "11n":
                     imageViewWeather.setImageResource(R.drawable.weather4);
                     break;
-                case "snow":
+                case "13n":
                     imageViewWeather.setImageResource(R.drawable.weather5);
                     break;
-                case "clear sky":
+                case "01n":
                 default:
                     imageViewWeather.setImageResource(R.drawable.weather1);
                     break;
