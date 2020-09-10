@@ -1,16 +1,12 @@
 package org.sochidrive.weather;
 
 import android.os.Bundle;
-import android.view.MenuItem;
 
-import org.sochidrive.weather.fragment.DeveloperFragment;
-import org.sochidrive.weather.fragment.FeedbackFragment;
 import org.sochidrive.weather.fragment.SettingsFragment;
 import org.sochidrive.weather.fragment.HomeFragment;
 import org.sochidrive.weather.fragment.ChangeCityFragment;
 import com.google.android.material.navigation.NavigationView;
 
-import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -53,38 +49,25 @@ public class MainActivity extends BaseActivity {
     }
 
     private void setOnClickForSideMenuItems() {
-        navigationView.setNavigationItemSelectedListener(new NavigationView.OnNavigationItemSelectedListener() {
-            @Override
-            public boolean onNavigationItemSelected(@NonNull MenuItem item) {
-                switch (item.getItemId()) {
-                    case R.id.nav_home: {
-                        setHomeFragment();
-                        drawer.close();
-                        break;
-                    }
-                    case R.id.nav_gallery: {
-                        setSettingsFragment();
-                        drawer.close();
-                        break;
-                    }
-                    case R.id.nav_slideshow: {
-                        setSlideshowFragment();
-                        drawer.close();
-                        break;
-                    }
-                    case R.id.nav_feedback: {
-                        setFeedbackFragment();
-                        drawer.close();
-                        break;
-                    }
-                    case R.id.nav_developer: {
-                        setDeveloperFragment();
-                        drawer.close();
-                        break;
-                    }
+        navigationView.setNavigationItemSelectedListener(item -> {
+            switch (item.getItemId()) {
+                case R.id.nav_home: {
+                    setHomeFragment();
+                    drawer.close();
+                    break;
                 }
-                return true;
+                case R.id.nav_gallery: {
+                    setSettingsFragment();
+                    drawer.close();
+                    break;
+                }
+                case R.id.nav_slideshow: {
+                    setSlideshowFragment();
+                    drawer.close();
+                    break;
+                }
             }
+            return true;
         });
     }
 
@@ -95,14 +78,6 @@ public class MainActivity extends BaseActivity {
 
     private void setSettingsFragment() {
         setFragment(new SettingsFragment());
-    }
-
-    private void setFeedbackFragment() {
-        setFragment(new FeedbackFragment());
-    }
-
-    private void setDeveloperFragment() {
-        setFragment(new DeveloperFragment());
     }
 
     private void setSlideshowFragment() {

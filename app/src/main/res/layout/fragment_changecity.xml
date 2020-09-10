@@ -29,28 +29,8 @@
         app:layout_constraintStart_toEndOf="@+id/checkBoxWindSpeed"
         app:layout_constraintTop_toTopOf="parent" />
 
-    <com.google.android.material.textfield.TextInputLayout
-        android:id="@+id/textInputLayoutSC"
-        android:layout_width="0dp"
-        android:layout_height="wrap_content"
-        app:errorEnabled="false"
-        android:enabled="false"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.5"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/checkBoxPressure">
-        <com.google.android.material.textfield.TextInputEditText
-            android:id="@+id/editTextSelectCity"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:hint="@string/selectCity"
-            android:inputType="textNoSuggestions"
-            />
-    </com.google.android.material.textfield.TextInputLayout>
 
-
-
-    <fragment
+    <androidx.fragment.app.FragmentContainerView
         android:id="@+id/fragmentCity"
         android:name="org.sochidrive.weather.fragment.FragmentCity"
         android:layout_width="0dp"
@@ -58,5 +38,5 @@
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/textInputLayoutSC" />
+        app:layout_constraintTop_toBottomOf="@+id/checkBoxWindSpeed" />
 </androidx.constraintlayout.widget.ConstraintLayout>

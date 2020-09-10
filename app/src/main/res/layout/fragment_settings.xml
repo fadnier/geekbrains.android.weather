@@ -6,6 +6,29 @@
     android:layout_height="match_parent"
     tools:context=".fragment.SettingsFragment">
 
+    <CheckBox
+        android:id="@+id/checkBoxWindSpeed"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/wind_speed"
+        app:layout_constraintBottom_toTopOf="@+id/checkBoxPressure"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+ />
+
+
+    <CheckBox
+        android:id="@+id/checkBoxPressure"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="@string/pressure"
+        app:layout_constraintBottom_toTopOf="@+id/switchTheme"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+ />
+
     <com.google.android.material.switchmaterial.SwitchMaterial
         android:id="@+id/switchTheme"
         android:layout_width="wrap_content"
