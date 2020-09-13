@@ -8,11 +8,15 @@ import androidx.annotation.NonNull;
 
 import org.sochidrive.weather.fragment.FragmentWeather;
 import org.sochidrive.weather.fragment.FragmentWeek;
+import org.sochidrive.weather.model.EducationSource;
+import org.sochidrive.weather.model.dao.EducationDao;
 import org.sochidrive.weather.model.OpenWeatherRepo;
 import org.sochidrive.weather.model.WeatherData;
 import org.sochidrive.weather.model.openweathermap.WeatherFiveDayRequest;
 import org.sochidrive.weather.model.openweathermap.WeatherRequest;
 import org.sochidrive.weather.model.WeatherWeekData;
+import org.sochidrive.weather.model.sql.Weather;
+
 
 import retrofit2.Call;
 import retrofit2.Callback;
@@ -24,6 +28,8 @@ public class Network {
     private FragmentWeek fragmentWeek;
     private FragmentWeather fragmentWeather;
     private Activity activitySel;
+    private EducationSource educationSource;
+
 
 
     public Network(String city, FragmentWeek fragmentWeek) {
@@ -67,6 +73,9 @@ public class Network {
             public void onResponse(@NonNull Call<WeatherRequest> call, @NonNull Response<WeatherRequest> response) {
                 if (response.body() != null && response.isSuccessful()) {
                     fragmentWeather.getData(new WeatherData(response.body()));
+                    EducationDao educationDao = App.getInstance().getEducationDao();
+                    educationSource = new EducationSource(educationDao);
+                    educationSource.addWeather(getWeatherModel(response.body()));
                 } else {
                     if(response.code() == 500) {
                         showErrorConn();
@@ -80,6 +89,15 @@ public class Network {
                 showErrorConn();
             }
         });
+    }
+
+    private Weather getWeatherModel(WeatherRequest weatherRequest) {
+        Weather weather = new Weather();
+        weather.city = weatherRequest.getCityName();
+        weather.icon = weatherRequest.getIcon();
+        weather.temp = weatherRequest.getDegree();
+        weather.dt = System.currentTimeMillis();
+        return weather;
     }
 
     private void showErrorConn() {

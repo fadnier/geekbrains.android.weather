@@ -2,11 +2,13 @@ package org.sochidrive.weather;
 
 import android.os.Bundle;
 
+import org.sochidrive.weather.fragment.HistoryCityFragment;
 import org.sochidrive.weather.fragment.SettingsFragment;
 import org.sochidrive.weather.fragment.HomeFragment;
 import org.sochidrive.weather.fragment.ChangeCityFragment;
 import com.google.android.material.navigation.NavigationView;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
 import androidx.fragment.app.Fragment;
 import androidx.fragment.app.FragmentTransaction;
@@ -25,6 +27,7 @@ public class MainActivity extends BaseActivity {
         setContentView(R.layout.activity_main);
 
         initView();
+        getSavedData();
         setSupportActionBar(toolbar);
         ActionBarDrawerToggle toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar, R.string.navigation_drawer_open, R.string.navigation_drawer_close);
@@ -38,6 +41,38 @@ public class MainActivity extends BaseActivity {
         toolbar = findViewById(R.id.toolbar);
         drawer = findViewById(R.id.drawer_layout);
         navigationView = findViewById(R.id.nav_view);
+    }
+
+    private void getSavedData() {
+        SingletonSave.getInstance();
+        if(SingletonSave.getWeatherData() == null) {
+            SingletonSave.setCity(this.getCityPref());
+            SingletonSave.setDegree(this.getDegreePref());
+            SingletonSave.setIcon(this.getWeatherIconPref());
+            SingletonSave.setCheckBoxWindSpeed(this.getWindSpeed());
+            SingletonSave.setCheckBoxPressure(this.getPressure());
+        }
+    }
+
+    public void setSavedData() {
+        this.setCityPref(SingletonSave.getCity());
+        this.setDegreePref(SingletonSave.getDegree());
+        this.setWeatherIconPref(SingletonSave.getIcon());
+        this.setDarkTheme(this.isDarkTheme());
+        this.setWindSpeed(SingletonSave.getCheckBoxWindSpeed());
+        this.setPressure(SingletonSave.getCheckBoxPressure());
+    }
+
+    @Override
+    protected void onSaveInstanceState(@NonNull Bundle outState) {
+        super.onSaveInstanceState(outState);
+        setSavedData();
+    }
+
+    @Override
+    protected void onDestroy() {
+        setSavedData();
+        super.onDestroy();
     }
 
     @Override
@@ -56,13 +91,18 @@ public class MainActivity extends BaseActivity {
                     drawer.close();
                     break;
                 }
-                case R.id.nav_gallery: {
+                case R.id.nav_settings: {
                     setSettingsFragment();
                     drawer.close();
                     break;
                 }
-                case R.id.nav_slideshow: {
-                    setSlideshowFragment();
+                case R.id.nav_change_city: {
+                    setChangeCityFragment();
+                    drawer.close();
+                    break;
+                }
+                case R.id.nav_history_city: {
+                    setHistoryCityFragment();
                     drawer.close();
                     break;
                 }
@@ -76,11 +116,13 @@ public class MainActivity extends BaseActivity {
         setFragment(fragment);
     }
 
+    private void setHistoryCityFragment() { setFragment(new HistoryCityFragment());}
+
     private void setSettingsFragment() {
         setFragment(new SettingsFragment());
     }
 
-    private void setSlideshowFragment() {
+    private void setChangeCityFragment() {
         setFragment(new ChangeCityFragment());
     }
 

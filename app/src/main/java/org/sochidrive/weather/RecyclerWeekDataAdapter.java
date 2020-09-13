@@ -11,8 +11,6 @@ import androidx.recyclerview.widget.RecyclerView;
 
 import org.sochidrive.weather.model.WeatherWeekData;
 
-
-
 public class RecyclerWeekDataAdapter extends RecyclerView.Adapter<RecyclerWeekDataAdapter.ViewHolder> {
     private WeatherWeekData data;
 
