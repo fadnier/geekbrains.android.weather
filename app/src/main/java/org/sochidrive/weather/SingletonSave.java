@@ -8,10 +8,28 @@ import java.io.Serializable;
 public class SingletonSave implements Serializable {
     private static Boolean checkBoxWindSpeed = false;
     private static Boolean checkBoxPressure = false;
-    private static String city = "Москва";
+    private static String city;
+    private static String degree;
+    private static String icon;
     private static WeatherData weatherData;
     private static WeatherWeekData weatherWeekData;
     private static SingletonSave instance;
+
+    public static String getDegree() {
+        return degree;
+    }
+
+    public static void setDegree(String degree) {
+        SingletonSave.degree = degree;
+    }
+
+    public static String getIcon() {
+        return icon;
+    }
+
+    public static void setIcon(String icon) {
+        SingletonSave.icon = icon;
+    }
 
     public static WeatherData getWeatherData() {
         return weatherData;

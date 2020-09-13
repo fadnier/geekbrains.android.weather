@@ -63,7 +63,7 @@ public class SettingsFragment extends Fragment {
 
     protected boolean isDarkTheme() {
         if(getActivity() != null) {
-            SharedPreferences sharedPref = getActivity().getSharedPreferences(BaseActivity.nameSharedPreference, MODE_PRIVATE);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(BaseActivity.isDarkTheme, MODE_PRIVATE);
             return sharedPref.getBoolean(BaseActivity.isDarkTheme, true);
         }
         return false;
@@ -71,7 +71,7 @@ public class SettingsFragment extends Fragment {
 
     protected void setDarkTheme(boolean isDarkTheme) {
         if(getActivity() != null) {
-            SharedPreferences sharedPref = getActivity().getSharedPreferences(BaseActivity.nameSharedPreference, MODE_PRIVATE);
+            SharedPreferences sharedPref = getActivity().getSharedPreferences(BaseActivity.isDarkTheme, MODE_PRIVATE);
             SharedPreferences.Editor editor = sharedPref.edit();
             editor.putBoolean(BaseActivity.isDarkTheme, isDarkTheme);
             editor.apply();

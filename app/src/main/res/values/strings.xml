@@ -41,6 +41,7 @@
     <string name="error_answer_text">Couldnt get data from server!</string>
     <string name="error_url">Server connection error</string>
     <string name="error_url_text">Couldnt connect to server!</string>
-    <string name="ok" translatable="false">Ok</string>
+    <string name="ok" translatable="false">OK</string>
+    <string name="history">History</string>
 
 </resources>

@@ -13,7 +13,6 @@ import androidx.annotation.Nullable;
 import androidx.fragment.app.Fragment;
 
 import com.squareup.otto.Subscribe;
-import com.squareup.picasso.Picasso;
 
 import org.sochidrive.weather.ChangeCityEvent;
 import org.sochidrive.weather.EventBus;
@@ -48,7 +47,6 @@ public class FragmentWeather extends Fragment {
     @Override
     public void onActivityCreated(@Nullable Bundle savedInstanceState) {
         super.onActivityCreated(savedInstanceState);
-        SingletonSave.getInstance();
         textWindSpeed.setVisibility(SingletonSave.getCheckBoxWindSpeed() ? View.VISIBLE : View.INVISIBLE);
         textPressure.setVisibility(SingletonSave.getCheckBoxPressure() ? View.VISIBLE : View.INVISIBLE);
 
@@ -58,8 +56,10 @@ public class FragmentWeather extends Fragment {
             textPressure.setText(String.format(Locale.getDefault(),"%s %s", getString(R.string.pressure), SingletonSave.getWeatherData().getPressure()));
             textWindSpeed.setText(String.format(Locale.getDefault(),"%s %s", getString(R.string.wind_speed), SingletonSave.getWeatherData().getWindSpeed()));
             setImageWeather(SingletonSave.getWeatherData().getIcon());
-            Picasso.get().load(getPicassoUrl(SingletonSave.getWeatherData().getIcon())).into(imageMainWeather);
         } else {
+            textMainDegree.setText(SingletonSave.getDegree());
+            textMainCity.setText(SingletonSave.getCity());
+            setImageWeather(SingletonSave.getIcon());
             new Network(SingletonSave.getCity(),this);
         }
     }
@@ -87,12 +87,14 @@ public class FragmentWeather extends Fragment {
 
     public void getData(WeatherData weatherData) {
         SingletonSave.setWeatherData(weatherData);
+        SingletonSave.setIcon(weatherData.getIcon());
+        SingletonSave.setDegree(weatherData.getDegree());
         textMainDegree.setText(weatherData.getDegree());
         textMainCity.setText(SingletonSave.getCity());
         textPressure.setText(String.format(Locale.getDefault(),"%s %s", getString(R.string.pressure), weatherData.getPressure()));
         textWindSpeed.setText(String.format(Locale.getDefault(),"%s %s", getString(R.string.wind_speed), weatherData.getWindSpeed()));
         setImageWeather(weatherData.getIcon());
-        Picasso.get().load(getPicassoUrl(weatherData.getIcon())).into(imageMainWeather);
+
     }
 
     private void setImageWeather(String nameWeather) {
@@ -117,26 +119,6 @@ public class FragmentWeather extends Fragment {
             default:
                 imageMainWeather.setImageResource(R.drawable.weather1);
                 break;
-        }
-    }
-
-    private String getPicassoUrl(String nameWeather) {
-        switch (nameWeather) {
-            case "02n":
-            case "03n":
-            case "04n":
-            case "50n":
-                return "https://images.unsplash.com/photo-1509803874385-db7c23652552?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
-            case "09n":
-            case "10n":
-                return "https://images.unsplash.com/photo-1428592953211-077101b2021b?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1267&q=80";
-            case "11n":
-                return "https://images.unsplash.com/photo-1429552077091-836152271555?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=632&q=80";
-            case "13n":
-                return "https://images.unsplash.com/photo-1547754980-3df97fed72a8?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=1350&q=80";
-            case "01n":
-            default:
-                return "https://images.unsplash.com/photo-1447601932606-2b63e2e64331?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=crop&w=627&q=80";
         }
     }
 
