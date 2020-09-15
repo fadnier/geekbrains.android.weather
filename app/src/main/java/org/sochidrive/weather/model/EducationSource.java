@@ -3,7 +3,11 @@ package org.sochidrive.weather.model;
 import org.sochidrive.weather.model.dao.EducationDao;
 import org.sochidrive.weather.model.sql.Weather;
 
+import java.sql.Timestamp;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 import java.util.List;
+import java.util.Locale;
 
 public class EducationSource {
     private final EducationDao educationDao;
@@ -16,12 +20,12 @@ public class EducationSource {
 
     public List<Weather> getWeaters(){
         if (weaters == null){
-            LoadWeathers();
+            loadWeathers();
         }
         return weaters;
     }
 
-    public void LoadWeathers(){
+    public void loadWeathers(){
         weaters = educationDao.getAllWeather();
     }
 
@@ -30,19 +34,30 @@ public class EducationSource {
     }
 
     public void addWeather(Weather weather){
-        educationDao.insertWeather(weather);
-        LoadWeathers();
+        Weather weatherSql = educationDao.getLastWeather();
+
+        Timestamp timestamp = new Timestamp(weatherSql.dt);
+        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
+        String date = dateFormat.format(new Date(timestamp.getTime()));
+
+        Timestamp timestamp2 = new Timestamp(weather.dt);
+        String date2 = dateFormat.format(new Date(timestamp2.getTime()));
+
+        if(!weatherSql.city.equals(weather.city) || !date.equals(date2)) {
+            educationDao.insertWeather(weather);
+
+        }
+        loadWeathers();
     }
 
-    public void updateStudent(Weather weather){
-
+    public void updateWeather(Weather weather){
         educationDao.updateWeather(weather);
-        LoadWeathers();
+        loadWeathers();
     }
 
-    public void removeStudent(long id){
+    public void removeWeather(long id){
         educationDao.deteleWeatherById(id);
-        LoadWeathers();
+        loadWeathers();
     }
 
 }

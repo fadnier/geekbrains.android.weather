@@ -89,6 +89,7 @@ public class FragmentWeather extends Fragment {
         SingletonSave.setWeatherData(weatherData);
         SingletonSave.setIcon(weatherData.getIcon());
         SingletonSave.setDegree(weatherData.getDegree());
+        SingletonSave.getMainActivity().setSavedData();
         textMainDegree.setText(weatherData.getDegree());
         textMainCity.setText(SingletonSave.getCity());
         textPressure.setText(String.format(Locale.getDefault(),"%s %s", getString(R.string.pressure), weatherData.getPressure()));
