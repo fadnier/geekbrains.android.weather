@@ -29,6 +29,9 @@ public interface EducationDao {
     @Query("SELECT * FROM weather")
     List<Weather> getAllWeather();
 
+    @Query("SELECT * FROM weather ORDER BY dt DESC LIMIT 1")
+    Weather getLastWeather();
+
     @Query("SELECT * FROM weather WHERE id = :id")
     Weather getWeatherById(long id);
 

@@ -14,6 +14,15 @@ public class SingletonSave implements Serializable {
     private static WeatherData weatherData;
     private static WeatherWeekData weatherWeekData;
     private static SingletonSave instance;
+    private static MainActivity mainActivity;
+
+    public static void setMainActivity(MainActivity mainActivity) {
+        SingletonSave.mainActivity = mainActivity;
+    }
+
+    public static MainActivity getMainActivity() {
+        return mainActivity;
+    }
 
     public static String getDegree() {
         return degree;
@@ -71,8 +80,6 @@ public class SingletonSave implements Serializable {
         SingletonSave.city = city;
     }
 
-
-    private SingletonSave() {}
 
     public static SingletonSave getInstance() {
         if(instance == null) {
