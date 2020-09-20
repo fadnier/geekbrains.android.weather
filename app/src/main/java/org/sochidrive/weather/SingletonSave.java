@@ -1,5 +1,7 @@
 package org.sochidrive.weather;
 
+import com.google.android.material.snackbar.Snackbar;
+
 import org.sochidrive.weather.model.WeatherData;
 import org.sochidrive.weather.model.WeatherWeekData;
 
@@ -9,6 +11,7 @@ public class SingletonSave implements Serializable {
     private static Boolean checkBoxWindSpeed = false;
     private static Boolean checkBoxPressure = false;
     private static String city;
+    private static String geoCity;
     private static String degree;
     private static String icon;
     private static WeatherData weatherData;
@@ -22,6 +25,18 @@ public class SingletonSave implements Serializable {
 
     public static MainActivity getMainActivity() {
         return mainActivity;
+    }
+
+    public static String getGeoCity() {
+        return geoCity;
+    }
+
+    public static void setGeoCity(String geoCity) {
+        SingletonSave.geoCity = geoCity;
+        if(city.equals("")) {
+            city = geoCity;
+            EventBus.getBus().post(new ChangeCityEvent(city));
+        }
     }
 
     public static String getDegree() {

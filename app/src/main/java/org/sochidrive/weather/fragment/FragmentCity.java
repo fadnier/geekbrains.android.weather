@@ -17,6 +17,7 @@ import org.sochidrive.weather.CityBtnOnItemClick;
 import org.sochidrive.weather.EventBus;
 import org.sochidrive.weather.R;
 import org.sochidrive.weather.RecyclerDataAdapter;
+import org.sochidrive.weather.SingletonSave;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -35,7 +36,7 @@ public class FragmentCity extends Fragment implements CityBtnOnItemClick {
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
-        listData = new ArrayList<>(Arrays.asList(getString(R.string.moscow),getString(R.string.saint_petersburg),getString(R.string.yekaterinburg),getString(R.string.novosibirsk),getString(R.string.sochi),getString(R.string.kazan)));
+        listData = new ArrayList<>(Arrays.asList(getString(R.string.сurrent_city)+SingletonSave.getGeoCity(), getString(R.string.moscow),getString(R.string.saint_petersburg),getString(R.string.yekaterinburg),getString(R.string.novosibirsk),getString(R.string.sochi),getString(R.string.kazan)));
         initView(view);
         setupRecyclerView();
     }
@@ -55,6 +56,10 @@ public class FragmentCity extends Fragment implements CityBtnOnItemClick {
 
     @Override
     public void onItemClicked(final String itemText) {
-        Snackbar.make(requireView(), R.string.change_city, Snackbar.LENGTH_LONG).setAction(R.string.change, v -> EventBus.getBus().post(new ChangeCityEvent(itemText))).show();
+        Snackbar.make(requireView(), R.string.change_city, Snackbar.LENGTH_LONG).setAction(R.string.change, v -> EventBus.getBus().post(new ChangeCityEvent(filterName(itemText)))).show();
+    }
+
+    private String filterName(String city) {
+        return city.replaceAll(getString(R.string.сurrent_city),"");
     }
 }

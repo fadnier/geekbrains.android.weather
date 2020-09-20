@@ -20,5 +20,9 @@
             android:id="@+id/nav_history_city"
             android:icon="@drawable/change"
             android:title="@string/history" />
+        <item
+            android:id="@+id/nav_current_city"
+            android:icon="@drawable/change"
+            android:title="@string/selecting_current_city" />
     </group>
 </menu>

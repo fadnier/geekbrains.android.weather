@@ -32,6 +32,6 @@
     <string name="error_url">Ошибка соединения сервера</string>
     <string name="error_url_text">Не смог соеденится с сервером!</string>
     <string name="history">История</string>
-    <string name="wifi_enable">Wifi включен</string>
-    <string name="wifi_disable">Wifi выключен</string>
+    <string name="сurrent_city">Текущий: </string>
+    <string name="selecting_current_city">Выбор текущего города</string>
 </resources>

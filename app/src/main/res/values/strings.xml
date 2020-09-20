@@ -43,8 +43,7 @@
     <string name="error_url_text">Couldnt connect to server!</string>
     <string name="ok" translatable="false">OK</string>
     <string name="history">History</string>
-    <string name="broadcast_receiver" translatable="false">Broadcast Receiver</string>
-    <string name="wifi_enable">Wifi enable</string>
-    <string name="wifi_disable">Wifi disable</string>
+    <string name="сurrent_city">Current: </string>
+    <string name="selecting_current_city">Selecting the current city</string>
 
 </resources>
