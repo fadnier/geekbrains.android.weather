@@ -26,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     public String getCityPref() {
         SharedPreferences defaultPref = PreferenceManager.getDefaultSharedPreferences(getApplicationContext());
-        return defaultPref.getString(CITYNAME, "Moscow");
+        return defaultPref.getString(CITYNAME, "");
     }
 
     public void setCityPref(String city) {

@@ -33,17 +33,21 @@ public class Network {
 
 
     public Network(String city, FragmentWeek fragmentWeek) {
-        SingletonSave.setCity(city);
-        this.fragmentWeek = fragmentWeek;
-        this.activitySel = fragmentWeek.getActivity();
-        updateForecastData(city);
+        if(!city.equals("")) {
+            SingletonSave.setCity(city);
+            this.fragmentWeek = fragmentWeek;
+            this.activitySel = fragmentWeek.getActivity();
+            updateForecastData(city);
+        }
     }
 
     public Network(String city, FragmentWeather fragmentWeather) {
-        SingletonSave.setCity(city);
-        this.fragmentWeather = fragmentWeather;
-        this.activitySel = fragmentWeather.getActivity();
-        updateWeatherData(city);
+        if(!city.equals("")) {
+            SingletonSave.setCity(city);
+            this.fragmentWeather = fragmentWeather;
+            this.activitySel = fragmentWeather.getActivity();
+            updateWeatherData(city);
+        }
     }
 
     private void updateForecastData(final String city) {
