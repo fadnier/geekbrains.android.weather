@@ -36,17 +36,21 @@ public class EducationSource {
     public void addWeather(Weather weather){
         Weather weatherSql = educationDao.getLastWeather();
 
-        Timestamp timestamp = new Timestamp(weatherSql.dt);
-        SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
-        String date = dateFormat.format(new Date(timestamp.getTime()));
+        if(weatherSql != null && weatherSql.dt != null) {
+            Timestamp timestamp = new Timestamp(weatherSql.dt);
+            SimpleDateFormat dateFormat = new SimpleDateFormat("dd.MM.yy", Locale.getDefault());
+            String date = dateFormat.format(new Date(timestamp.getTime()));
 
-        Timestamp timestamp2 = new Timestamp(weather.dt);
-        String date2 = dateFormat.format(new Date(timestamp2.getTime()));
+            Timestamp timestamp2 = new Timestamp(weather.dt);
+            String date2 = dateFormat.format(new Date(timestamp2.getTime()));
 
-        if(!weatherSql.city.equals(weather.city) || !date.equals(date2)) {
+            if(!weatherSql.city.equals(weather.city) || !date.equals(date2)) {
+                educationDao.insertWeather(weather);
+            }
+        } else {
             educationDao.insertWeather(weather);
-
         }
+
         loadWeathers();
     }
 

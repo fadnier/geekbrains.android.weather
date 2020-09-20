@@ -8,19 +8,13 @@ import android.content.IntentFilter;
 import android.net.wifi.WifiManager;
 import android.os.Build;
 import android.os.Bundle;
-import android.util.Log;
-import android.widget.Toast;
 
 import org.sochidrive.weather.fragment.HistoryCityFragment;
 import org.sochidrive.weather.fragment.SettingsFragment;
 import org.sochidrive.weather.fragment.HomeFragment;
 import org.sochidrive.weather.fragment.ChangeCityFragment;
 
-import com.google.android.gms.tasks.OnCompleteListener;
-import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
-import com.google.firebase.iid.FirebaseInstanceId;
-import com.google.firebase.iid.InstanceIdResult;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -29,14 +23,11 @@ import androidx.fragment.app.FragmentTransaction;
 import androidx.drawerlayout.widget.DrawerLayout;
 import androidx.appcompat.widget.Toolbar;
 
-import java.util.Objects;
-
 public class MainActivity extends BaseActivity {
-    private static final String TAG = "MyFirebaseMsgService";
+
     private NavigationView navigationView;
     private DrawerLayout drawer;
     private Toolbar toolbar;
-    private BroadcastReceiver wifiReceiver = new MessageReceiver();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -53,25 +44,6 @@ public class MainActivity extends BaseActivity {
         setHomeFragment();
         setOnClickForSideMenuItems();
 
-        IntentFilter filter = new IntentFilter(WifiManager.WIFI_STATE_CHANGED_ACTION);
-        registerReceiver(wifiReceiver, filter);
-        initNotificationChannel();
-
-        FirebaseInstanceId.getInstance().getInstanceId()
-                .addOnCompleteListener(task -> {
-                    if (!task.isSuccessful()) {
-                        Log.w(TAG, "getInstanceId failed", task.getException());
-                        return;
-                    }
-
-                    // Get new Instance ID token
-                    String token = Objects.requireNonNull(task.getResult()).getToken();
-
-                    // Log and toast
-                    String msg = getString(R.string.msg_token_fmt)+ token;
-                    Log.d(TAG, msg);
-                    Toast.makeText(MainActivity.this, msg, Toast.LENGTH_SHORT).show();
-                });
     }
 
     private void initView() {
@@ -109,7 +81,6 @@ public class MainActivity extends BaseActivity {
 
     @Override
     protected void onDestroy() {
-        unregisterReceiver(wifiReceiver);
         setSavedData();
         super.onDestroy();
     }
@@ -153,17 +124,6 @@ public class MainActivity extends BaseActivity {
     private void setHomeFragment() {
         HomeFragment fragment = new HomeFragment();
         setFragment(fragment);
-    }
-
-    private void initNotificationChannel() {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.O) {
-            NotificationManager notificationManager = (NotificationManager) getSystemService(Context.NOTIFICATION_SERVICE);
-            int importance = NotificationManager.IMPORTANCE_LOW;
-            NotificationChannel channel = new NotificationChannel("2", "name", importance);
-            if (notificationManager != null) {
-                notificationManager.createNotificationChannel(channel);
-            }
-        }
     }
 
     private void setHistoryCityFragment() { setFragment(new HistoryCityFragment());}
