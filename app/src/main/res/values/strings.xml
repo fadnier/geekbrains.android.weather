@@ -46,8 +46,5 @@
     <string name="broadcast_receiver" translatable="false">Broadcast Receiver</string>
     <string name="wifi_enable">Wifi enable</string>
     <string name="wifi_disable">Wifi disable</string>
-    <string name="msg_token_fmt" translatable="false">token: </string>
-    <string name="default_notification_channel_id" translatable="false">3</string>
-    <string name="fcm_message" translatable="false">Firebase push</string>
 
 </resources>
