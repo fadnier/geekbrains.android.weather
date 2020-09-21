@@ -33,7 +33,7 @@ public class Network {
 
 
     public Network(String city, FragmentWeek fragmentWeek) {
-        if(!city.equals("")) {
+        if(city != null && !city.equals("")) {
             SingletonSave.setCity(city);
             this.fragmentWeek = fragmentWeek;
             this.activitySel = fragmentWeek.getActivity();
@@ -42,7 +42,7 @@ public class Network {
     }
 
     public Network(String city, FragmentWeather fragmentWeather) {
-        if(!city.equals("")) {
+        if(city != null && !city.equals("")) {
             SingletonSave.setCity(city);
             this.fragmentWeather = fragmentWeather;
             this.activitySel = fragmentWeather.getActivity();

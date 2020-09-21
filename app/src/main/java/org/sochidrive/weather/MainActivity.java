@@ -1,6 +1,7 @@
 package org.sochidrive.weather;
 
 import android.Manifest;
+import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.location.Address;
 import android.location.Criteria;
@@ -9,12 +10,28 @@ import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
 import android.os.Bundle;
+import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
+import android.widget.Toast;
 
 import org.jetbrains.annotations.NotNull;
 import org.sochidrive.weather.fragment.HistoryCityFragment;
 import org.sochidrive.weather.fragment.SettingsFragment;
 import org.sochidrive.weather.fragment.HomeFragment;
 import org.sochidrive.weather.fragment.ChangeCityFragment;
+
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInAccount;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.gms.common.SignInButton;
+import com.google.android.gms.common.api.ApiException;
+import com.google.android.gms.location.FusedLocationProviderClient;
+import com.google.android.gms.location.LocationRequest;
+import com.google.android.gms.location.LocationServices;
+import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.tasks.Task;
 import com.google.android.material.navigation.NavigationView;
 
 import androidx.annotation.NonNull;
@@ -52,6 +69,8 @@ public class MainActivity extends BaseActivity {
         setHomeFragment();
         setOnClickForSideMenuItems();
         requestPemissions();
+
+
     }
 
     private void initView() {
@@ -174,30 +193,27 @@ public class MainActivity extends BaseActivity {
         if (ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_COARSE_LOCATION) != PackageManager.PERMISSION_GRANTED
                 && ActivityCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) != PackageManager.PERMISSION_GRANTED)
             return;
+
         LocationManager locationManager = (LocationManager) getSystemService(LOCATION_SERVICE);
         Criteria criteria = new Criteria();
         criteria.setAccuracy(Criteria.ACCURACY_COARSE);
 
         String provider = locationManager.getBestProvider(criteria, true);
+
+        final Location loc = locationManager.getLastKnownLocation(LocationManager.PASSIVE_PROVIDER);
+        if (loc != null) {
+            setGeoCity(loc.getLatitude(),loc.getLongitude());
+        }
+
         if (provider != null) {
+
             locationManager.requestLocationUpdates(provider, 10000, 10, new LocationListener() {
                 @Override
                 public void onLocationChanged(@NotNull Location location) {
                     double lat = Objects.requireNonNull(location).getLatitude();
                     double lng = Objects.requireNonNull(location).getLongitude();
 
-                    Geocoder geocoder = new Geocoder(getApplication(), Locale.getDefault());
-
-                    try {
-                        List<Address> address = geocoder.getFromLocation(lat, lng, 1);
-                        if (address.size() > 0) {
-                            String city = address.get(0).getLocality();
-                            SingletonSave.setGeoCity(city);
-                        }
-
-                    } catch (IOException e) {
-                        e.printStackTrace();
-                    }
+                    setGeoCity(lat,lng);
                 }
 
                 @Override
@@ -211,6 +227,22 @@ public class MainActivity extends BaseActivity {
                 public void onProviderDisabled(@NotNull String provider) {
                 }
             });
+        }
+    }
+
+    private  void setGeoCity(double lat, double lng) {
+        Geocoder geocoder = new Geocoder(getApplication(), Locale.getDefault());
+        Log.d("GEOPOS",lat+" "+lng);
+        try {
+            List<Address> address = geocoder.getFromLocation(lat, lng, 1);
+            if (address.size() > 0) {
+                String city = address.get(0).getLocality();
+                SingletonSave.setGeoCity(city);
+                Log.d("GEOPOS",city);
+            }
+
+        } catch (IOException e) {
+            e.printStackTrace();
         }
     }
 
